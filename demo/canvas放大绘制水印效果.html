@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body style="background-color: black;">
+		<canvas id="canvas" style="margin: 20px auto; box-shadow: #fff 2px 2px 2px;display: block; border: 1px solid wheat;">
+			
+		</canvas>
+		<input id="canvas-range" type="range" style="width: 900px; margin:20px auto;display: block;" min="0.2" max="3" step="0.01" value="1.0" />
+		<canvas id="markCanvas" style="margin: 0 auto;display: none;">
+			
+		</canvas>
+		<script>
+			var canvas=document.getElementById('canvas');
+			var context=canvas.getContext('2d');
+			var button1=document.getElementById('canvas-range');
+			var scale=1;
+			var image=new Image();
+			var markCanvas=document.getElementById('markCanvas');
+			var markContext=markCanvas.getContext('2d');
+			
+			
+			
+			image.src="img/528737c940449.jpg"
+			canvas.width=1200;
+			canvas.height=800;
+			markCanvas.width=600;
+			markCanvas.height=100;
+			
+			markContext.font='bold 50px Arial';
+			markContext.fillStyle='rgba(255,255,255,0.5)';
+			markContext.textBaseline='middle'
+			markContext.fillText('==dayang.com==',20,50)//20.50是位置
+			image.onload=function(){
+				drawimage(scale)
+			button1.oninput=function(){
+				scale=this.value
+				drawimage(scale)
+			}
+			}
+			function drawimage(sc){
+				context.clearRect(0,0,canvas.width,canvas.height)
+				var imageWidth=1920*sc;
+				var imageHeigth=1200*sc;
+				var dx=canvas.width/2 - imageWidth/2;
+				var dy=canvas.height/2 - imageHeigth/2;
+				context.drawImage(image,dx,dy,imageWidth,imageHeigth);
+				context.drawImage(markCanvas,canvas.width - markCanvas.width,canvas.height - markCanvas.height);
+			}
+			
+			
+			
+			
+		</script>
+	</body>
+</html>

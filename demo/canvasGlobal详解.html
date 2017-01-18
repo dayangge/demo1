@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    	.button{
+    		padding:0 calc(50% - 550px);
+    		font-family: arial;
+    		text-align: center;
+    	}
+    	.button a{
+    		padding: 0 0.5em;
+    	}
+    </style>
+</head>
+<body>
+<canvas id="canvas" style="border: 1px solid #aaa;display: block;margin: 50px auto;">
+	当前浏览器不兼容canvas
+</canvas>
+<!-- 
+source-over     默认。在目标图像上显示源图像。
+source-atop     在目标图像顶部显示源图像。源图像位于目标图像之外的部分是不可见的。
+source-in       在目标图像中显示源图像。只有目标图像内的源图像部分会显示，目标图像是透明的。
+source-out      在目标图像之外显示源图像。只会显示目标图像之外源图像部分，目标图像是透明的。
+destination-over    在源图像上方显示目标图像。
+destination-atop    在源图像顶部显示目标图像。源图像之外的目标图像部分不会被显示。
+destination-in      在源图像中显示目标图像。只有源图像内的目标图像部分会被显示，源图像是透明的。
+destination-out     在源图像外显示目标图像。只有源图像外的目标图像部分会被显示，源图像是透明的。
+lighter         显示源图像 + 目标图像。
+copy            显示源图像。忽略目标图像。
+xor             这个值与顺序无关，只绘制出不重叠的源与目标区域。所有重叠的部分都变成透明的
+ -->
+<div id="buttons" class="button">
+    <a href="#">source-over</a>
+    <a href="#">source-atop</a>
+    <a href="#">source-in</a>
+    <a href="#">source-out</a>
+    <a href="#">destination-over</a>
+    <a href="#">destination-atop</a>
+    <a href="#">destination-in</a>
+    <a href="#">destination-out</a>
+    <a href="#">lighter</a>
+    <a href="#">copy</a>
+    <a href="#">xor</a>
+</div>
+<script>
+    window.onload=function () {
+
+        draw("source-over");
+        var buttons = document.getElementById("buttons").getElementsByTagName("a");
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].onclick = function () {
+                draw(this.text);
+                return false;
+            }
+        }
+    };
+
+    function draw(compositeStyle) {
+        var canvas = document.getElementById('canvas');
+
+        canvas.width = 1200;
+        canvas.height = 800;
+
+        var context = canvas.getContext('2d');
+
+        context.clearRect(0,0,canvas.width,canvas.height);
+
+        context.font = "bold 40px Arial";
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.fillStyle = "#058";
+        context.fillText("globalCompositeOperation = "+ compositeStyle,canvas.width/2,60);
+
+        context.fillStyle = "blue";
+        context.fillRect(300,150,500,500);
+
+        context.globalCompositeOperation = compositeStyle;
+        context.fillStyle = "red";
+        context.beginPath();
+        context.moveTo(700,250);
+        context.lineTo(1000,750);
+        context.lineTo(400,750);
+        context.closePath();
+        context.fill();
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<div id="a1"></div>
+	<body>
+		<script>
+			var f1=[function(x){return x*x},20];
+			var a1=document.getElementById('a1');
+			a1.innerHTML=f1[0](f1[1]);
+			var a2="global scope"
+			function f2(){
+				var a2='local scope'
+				function f(){return a2}
+				return f
+			}
+			console.log(f2()())
+			//闭包
+			function f3(){
+				var n=0;
+				return{
+					count:function(){return n++;},
+					reset:function(){return n=0;}
+				}
+			}
+			var a3=f3(),a4=f3();
+			console.log(a3.count())
+			console.log(a4.count())
+			console.log(a3.reset())
+			console.log(a3.count())
+			console.log(a4.count())
+			//闭包
+			function f4(){
+				n=[];
+				for (var i=0;i<10;i++) {
+					n[i]=function(){return i}
+				}
+				return n
+			}
+			//NEW出来的函数无法捕获局部变量
+			console.warn(f4()[5]())
+			function f5(){
+				var a2="local scope"
+				return new Function('return a2')
+			}
+			console.log('f5:'+f5()());
+			var a5=function(x,y){return x+y}
+			var a6=function(x){return x*x}
+			
+			var a7=[1,1,3,5,5]
+			var a8=a7.reduce(a5)/a7.length;
+			var a9=a7.map(function(x){return x-a8});
+			var a10=Math.sqrt(a9.map(a6).reduce(a5)/a7.length-1);
+			console.warn('a8:'+a8);
+			console.warn('a9:'+a9);
+			console.warn('a10:'+a10);
+			
+			
+			
+			
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+		.box{margin: 50px auto; width: 960px;height: 540px;position: relative;}
+			img{
+				display: block;
+				width: 960px;
+				height: 540px;
+				margin: 0 auto;
+				-webkit-filter: blur(20px);
+				-moz-filter:blur(20px);
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+			#canvas{
+				display: block;
+				position: absolute;
+				left: 0;
+				top: 0;
+				z-index: 100;
+				margin: 0 auto;
+			}
+			.button{
+				width: 80px;
+				height: 48px;
+				color: white;
+				background-color: #0C4E7C;
+				position: absolute;
+				bottom: 10px;
+				font-family: "微软雅黑";
+				font-size: 18px;
+				border-radius:10% ;
+				z-index: 101;
+			}
+			.button:hover{
+				background-color:#6495ED ;
+			}
+			.button:active{
+				background-color: #008000;
+			}
+			#reset{
+				left: 30px;
+			}
+			#show{
+				right: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+		<img src="img/1_120428142107_2.jpg" />
+		<canvas id="canvas"></canvas>
+		<input type="button"  value="重置"/ id="reset" class="button">
+		<input type="button" value="展示" id="show" class="button"/>
+		</div>
+		<script>
+			var canvasWidth=960,canvasHeight=540;
+			var canvas=document.getElementById('canvas'),reset=document.getElementById('reset'),show=document.getElementById('show');
+			var context=canvas.getContext('2d');
+			var radius=50;
+			var image=new Image();
+			var timer=null;
+			canvas.width=960;
+			canvas.height=540;
+			var clippingRegion={x:Math.random()*(canvas.width-2*radius)+radius,y:Math.random()*(canvas.height-2*radius)+radius,r:radius};
+			image.src='img/1_120428142107_2.jpg';
+			image.onload=function(e){
+				initCanvas();
+			}
+			reset.onclick=initCanvas;
+			show.onclick=showImg;
+			function initCanvas(){
+				clearInterval(timer);
+				clippingRegion={x:Math.random()*(canvas.width-2*radius)+radius,y:Math.random()*(canvas.height-2*radius)+radius,r:radius};
+				draw(image,clippingRegion);
+			
+			}
+			function drawClipping(b){
+				context.beginPath();
+				context.arc(b.x,b.y,b.r,0,Math.PI*2,false);
+				context.clip();
+			}
+			function draw(a,b){
+				context.clearRect(0,0,canvas.width,canvas.height)
+				context.save();
+				drawClipping(b);
+				context.drawImage(a,0,0,canvas.width,canvas.height)
+				context.restore();
+			}
+			function showImg(){
+				timer=setInterval(
+				function(){
+				clippingRegion.r+=20;
+				draw(image,clippingRegion)
+				if(clippingRegion.r>1000){
+					clearInterval(timer)
+				}
+				},50)
+			}
+		
+		</script>
+		
+		
+	</body>
+	
+</html>

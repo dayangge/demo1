@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<canvas id="canvas" width="1024" height="768" style="border: 1px solid black; margin: 0 auto;"></canvas>
+		<script>
+			var canvas=document.getElementById('canvas');
+			var context=canvas.getContext('2d')
+			context.beginPath();
+			context.moveTo(0,0)
+			context.lineTo(0,100)
+			context.lineTo(200,100)
+			context.lineTo(0,0)
+			context.closePath();
+			
+			context.fillStyle='#83006F'
+			context.fill();
+			context.lineWidth=5
+			context.strokeStyle='red'
+			context.stroke();
+			
+			context.beginPath();
+			context.moveTo(200,0)
+			context.lineTo(0,200)
+			context.lineTo(200,400)
+			context.lineTo(200,0)
+			context.closePath();
+			
+			context.fillStyle='#83006F'
+			context.fill();
+			context.lineWidth=5
+			context.strokeStyle='yellow'
+			context.stroke();
+			
+			context.beginPath();
+			context.arc(400,400,100,0,0.5*Math.PI,true)
+			context.strokeStyle='black'
+			context.lineWidth=2
+			context.stroke();
+			
+			context.fillStyle='blue'
+			for (var i=0;i<10;i++) {
+				context.beginPath()
+				context.arc(i*70+70,500,30,0,2*Math.PI*(i+1)/10)
+				context.fill()
+			}
+			
+		</script>
+	</body>
+	
+</html>

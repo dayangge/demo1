@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>给你看点新东西</title>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<style>
+		*{font-family: "微软雅黑";margin: 0;padding: 0;}
+			.button{ width: 160px; height: 96px;position: relative;display: block;color: white;text-align: center;line-height: 96px;}
+			.button::before{
+				content: " ";
+				position: absolute;
+				top: 0;right: 0;left: 0;bottom: 0;
+				z-index: -1;
+				background-color:#58a ;
+				transform: skew(45deg);
+			}
+			.img{
+				width: 300px;
+				-webkit-clip-path: polygon(50% 0,100% 50%,50% 100%,0 50%);
+				clip-path: polygon(50% 0,100% 50%,50% 100%,0 50%);
+				transition:all 1s linear;
+			}
+			.img:hover{
+				-webkit-clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
+				-moz-clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
+				
+			}
+			.corner{width: 300px; height: 300px;margin: 20px;float: left;}
+			.do1{
+				background:#2FA0EC;
+				background:linear-gradient(-135deg,transparent 15px,#58a 0) right,linear-gradient(135deg,transparent 15px,#2fa 0) left;
+				background-size: 50% 100%;
+				background-repeat: no-repeat;
+				}
+			.do2{
+				background: salmon;
+				background: linear-gradient(-45deg, transparent 15px,#58a 0) top left,
+				            linear-gradient(-135deg, transparent 15px,#58a 0) top right,
+				            linear-gradient(45deg, transparent 15px,#58a 0) bottom left,
+				            linear-gradient(135deg , transparent 15px,#58a 0) bottom right,;
+				background-size:50% 50% ;
+				background-repeat: no-repeat;
+				filter:drop-shadow( 8px 8px 15px rgba(0,0,0,.5));/*滤镜效果规范  忽略透明加投影*/	
+				-webkit-filter:drop-shadow( 8px 8px 15px rgba(0,0,0,.5))
+			}
+			.do3{
+				position: relative;
+				display: inline-block;
+				color: white;
+				padding: 0 20px;
+				text-align: center;
+				line-height: 300px;
+			}
+			.do3::before{
+				content: "";
+				position: absolute;
+				top: 0;right: 0;left: 0;bottom: 0;
+				z-index: -1;
+				background: #944F95;
+				transform: scaleY(2.3) perspective(20px) rotateX(5deg);
+				transform-origin:bottom;
+			}
+			.pie{
+				width: 200px;
+				height: 200px;
+				background: #FA8072;
+				border-radius: 50%;
+				background-image: linear-gradient(to right,transparent 50%,#655 0);
+				}
+			.pie::before{
+				content: "";
+				display: block;
+				margin-left:50% ;
+				height: 100%;
+				background-color:inherit ;
+				transform-origin: left;
+				border-radius: 0 100% 100% 0/50%;/*半圆*/
+				animation: spin 3s linear infinite,
+						   bg 6s step-end infinite;	
+			}
+			@-webkit-keyframes spin{
+				to{transform: rotate(.5turn);}
+			}
+			
+			@-webkit-keyframes bg{
+				50%{background: #655;}
+			}
+			@-moz-keyframes spin{
+				to{transform: rotate(.5turn);}
+			}
+			@-moz-keyframes bg{
+				50%{background: #655;}
+			}
+			.pie2{
+				position: relative;
+				width: 200px;
+				height: 200px;
+				background: #FA8072;
+				border-radius: 50%;
+				background-image: linear-gradient(to right,transparent 50%,#655 0);
+				text-align: center;
+				line-height: 200px;
+				color:aqua
+				}
+			.pie2 span{
+				position: relative;
+				z-index: 2;
+			}
+			.pie2::before{
+				position: absolute;
+				content: "";
+				top: 0;
+				left: 50%;
+				display: block;
+				width: 50%;
+				height: 100%;
+				background-color:inherit ;
+				transform-origin: left;
+				border-radius: 0 100% 100% 0/50%;/*半圆*/
+				animation: spin 50s linear infinite,
+						   bg 100s step-end infinite;
+				animation-play-state:paused ;
+				animation-delay: inherit;	
+			}
+			@-webkit-keyframes spin{
+				to{transform: rotate(.5turn);}
+			}
+			@-webkit-keyframes bg{
+				50%{background: #655;}
+			}
+			.shadowbox{
+				width: 200px;
+				height: 100px;
+				background-color: coral;
+				float: left;
+				margin: 20px;
+			}
+			.shadowbox1{
+				box-shadow: 0 8px 8px -4px black;
+			}
+			.shadowbox2{
+				box-shadow:8px 0 8px -4px black,
+						  -8px 0 8px -4px black;
+			}
+			.shadowbox img:hover{filter:none ;-webkit-filter: none;}
+			.sha1{ 
+				width: 100%;
+				filter: sepia(1);
+				-webkit-filter: sepia(1);/*所有的色相值会被收敛到35~40 Speia滤镜是对图片或元素整体进行棕褐色处理，就是老照片那种效果。sepia:乌墨色*/
+				}
+			.sha2{
+				width: 100%;
+				filter:saturate(4) hue-rotate(295deg) ;
+				-webkit-filter: saturate(4) hue-rotate(295deg);/*saturate提升饱和度 hue-rotate色相偏移 saturate：浸透  */
+			}	
+			.blend{
+				width: 300px;
+				height: 200px;
+				margin: 20px;
+				float: left;
+				background: hsl(335,100%,50%);
+				text-align: center;
+				transition: all .5s ease-in-out ; 
+			}
+			.blend>img{
+				width: 100%;
+				mix-blend-mode: luminosity;/*luminosity明度ps混合模式中的明度 mix-blend-mode向下混合*/
+			}
+			.blend:hover{
+				background: transparent;
+			}
+			.tinted-img{
+				width: 300px;
+				height: 200px;
+				float: left;
+				background-size: 100%;
+				background-image:url(img/528737c940449.jpg) ;
+				background-color: hsl(240,100%,50%);
+				background-blend-mode:luminosity ;
+				transition: 0.5s background-color ease-in-out; 
+				background-repeat:no-repeat ;
+				margin: 20px;
+			}
+			.tinted-img:hover{
+				background-color:transparent ;
+			}
+			.clear{clear: both;}
+			.test-content{
+				margin: 20px auto;
+				width: 800px;
+				height: 450px;
+			}
+			.content{
+				position: relative;
+				top: 80px;
+				width: 500px;
+				height: 200px;
+				margin: 0 auto;
+				padding: 40px;
+				color: #FFFFFF;
+				font-size: 18px;
+				line-height: 30px;
+				text-align: center;
+				overflow: hidden;
+				box-shadow: 3px 3px 3px rgba(0,0,0,.3),
+							-3px 0px 3px rgba(0,0,0,.3);
+			}
+			.test-content,.content::before{
+				background: url(img/52a7dd7df08b4.jpg) 0/cover fixed;
+			}
+			.content::before{
+				display: block;
+				content: " ";
+				position: absolute;
+				top: 0; right: 0; left: 0; bottom: 0;
+				background-color: rgba(255,255,255,.3);
+				-webkit-filter: blur(20px);
+				margin: -20px;
+				z-index: -1;
+			}
+			
+			.do4{
+				float: left;
+				width: 250px;
+				height: 200px;
+				background: #00FFFF;
+				margin: 20px;
+			}
+			.fanz{
+				background: linear-gradient(to left bottom,transparent 50%,#666 0) no-repeat 100% 0 / 2em 2em,
+				            linear-gradient(-135deg,transparent 2em,#0ff 0 );
+				
+			}
+			.fanz2{
+				hyphens: auto;
+				text-align: justify;
+			}
+			dt,dd{display: inline}
+			dd{margin: 0;font-weight:normal ;}
+			dd::after{
+				content: "\A";
+				white-space: pre;
+			}
+			/*随字号大小改变的条文背景*/
+			.do5{
+				font-size: 1em;
+				float: left;
+				width: 300px;
+				padding: .5em;
+				line-height: 1.5;
+				background: beige;
+				background-image: -webkit-linear-gradient(rgba(0,0,0,.2) 50%, transparent 0%);
+				background-image: -moz-linear-gradient(rgba(0,0,0,.2) 50%, transparent 0%);
+				background-image: -o-linear-gradient(rgba(0,0,0,.2) 50%, transparent 0%);
+				background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.5, rgba(0,0,0,.2)), color-stop(0, transparent));
+				background-image: linear-gradient(rgba(0,0,0,.2) 50%, transparent 0%);
+					
+				background-size: auto 3em; 
+				margin: 20px;
+				background-origin: content-box;
+			}
+			.code{
+				width: 300px;
+				float: left;
+				display: block;
+				margin: 1em 0;
+				white-space: pre;
+				tab-size: 4;
+			}
+			.lizi{
+				width: 300px;
+				height: 200px;
+				float: left;
+				margin: 20px;
+			}
+			.textShadow{
+				background: hsl(210,13%,60%);
+				color: hsl(210,13%,30%);
+				text-shadow: 0 1px 1px rgba(255,255,255,.8);
+				text-align: center;
+				line-height: 30px;
+				cursor: cell;
+			}
+			.light{
+				background: #000000;
+				color: navajowhite;
+				font-size: 24px;
+				line-height: 200px;
+				text-align: center;
+				letter-spacing: 2px;
+				text-shadow: 0 0 .1em,0 0 .3em;
+				cursor: not-allowed;
+			}
+			.projection{
+				background: #2FA0EC;
+				color: white;
+				text-align: center;
+				line-height: 200px;
+				font-size: 36px;
+				text-shadow: 0 1px hsl(0,0%,85%),
+							 0 2px hsl(0,0%,80%),
+							 0 3px hsl(0,0%,75%),
+							 0 4px hsl(0,0%,70%),
+							 0 5px hsl(0,0%,65%),
+							 0 5px 10px black;
+				cursor: none;			 
+			}	
+			.hot{
+				float: left;
+				background: linear-gradient(to right,#66a 50%,#98d 0);
+				width: 100px;
+				height: 100px;
+				border: 10px solid transparent;
+				cursor: pointer;
+				margin: 20px;
+				box-shadow: 0 0 0 1px rgba(0,0,0,.3) inset;
+				background-clip: padding-box;
+			}
+			.check{
+				background: #FFDEAD;
+				font-size: 24px;
+			}
+			.check input[type="checkbox"]+label::before{
+				content: "\a0";
+				display: inline-block;
+				vertical-align: .05em;
+				width: .9em;
+				height: .9em;
+				margin-right: .2em;
+				border-radius:.2em ;
+				background: silver;
+				text-indent: .1em;
+				line-height: .65;
+			}
+			.check input[type="checkbox"]:checked+label::before{
+				content: "\2713";
+				background: yellowgreen;
+			}
+			.check input[type="checkbox"]{
+				position: absolute;
+				clip: rect(0,0,0,0);
+			}
+			.check input[type="checkbox"]:focus+label::before{
+				box-shadow: 0 0 .1em .1em #5588AA;
+			}
+			.wuxu{
+				float: left;
+				width: 200px;
+				height: 300px;
+				margin: 20px;
+				overflow: auto;
+				border: 1px solid silver;
+				line-height: 24px;
+			}
+			.wuxu{
+				background:linear-gradient(white 30%,transparent),
+						   radial-gradient(at top,rgba(0,0,0,.3),transparent 70%);
+						   background-repeat:no-repeat ;
+				background-size:100% 15px ;
+				background-attachment:local, scroll ;
+			}
+			.image-slider{
+				float: left;
+				width: 400px;
+				display: block;
+				margin: 20px;
+				position: relative;
+			}
+			.image-slider>div{
+				position: absolute;
+				top: 0;left: 0;right: 0;bottom: 0;
+				width: 50%;
+				overflow: hidden;
+				resize: horizontal;
+				max-width: 400px;
+			}
+			.image-slider img{
+				width: 400px;
+			}
+			figure{
+				float: left;
+				max-width: 300px;
+				width: -webkit-min-content;
+				width: -moz-min-content;
+				margin: 20px;
+			}
+			figure>img{
+				width: 250px;
+				border: 1px solid #665555;
+			}
+			.xuanze{
+				width: 50px;
+				height: 300px;
+				float: left;
+				margin: 20px;
+			}
+			.xuanze li{
+				width: 30px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				list-style: none;
+				color: #5588AA;
+			}
+			.xuanze li:first-child:nth-last-child(4){/*匹配列表项证号为4个时的第一个选项*/
+				background: #FA8072;
+			}
+			.xuanze li:first-child:nth-last-child(6),.xuanze li:first-child:nth-last-child(6)~li{/*匹配列表项为6个时的所有项*/
+				background: #9ACD32;
+			}
+			footer{
+				padding: 1em;
+				padding: 1em calc(50% - 450px);
+				background: #333;
+				color: white;
+				text-align: center;
+			}
+			section{
+				margin-top: 20px;
+				padding: 1em;
+				padding: 1em calc(50% - 550px);
+				background: #D5D6E2;
+			}
+			.v1{
+				width: 300px;
+				float: left;
+				height: 300px;
+			}
+			.ball{
+				float: left;
+				width: 100px;
+				height: 100px;
+				border: 1px solid #333333;
+				background: #494A5F;
+				border-radius:50% ;
+				margin: 20px;
+				animation: bounce 3s cubic-bezier(.1,.25,1,.25) infinite;
+			}
+       		@-moz-keyframes bounce{
+			60%,80%,to{
+				transform: translateY(400px);
+				animation-timing-function: ease;
+			70%{transform: translateY(300px);}
+			90%{transform: translateY(360px);}
+			}
+			}
+			@-webkit-keyframes bounce{
+			60%,80%,to{
+				transform: translateY(400px);
+				animation-timing-function: ease;
+			70%{transform: translateY(300px);}
+			90%{transform: translateY(360px);}
+			}
+			}
+			.blink{
+				float: left;
+				margin: 20px;
+				font-size:24px ;
+				animation: .5s blink infinite alternate-reverse;
+			}
+			@-moz-keyframes blink{
+				to{color: transparent;}
+			}
+			@-webkit-keyframes blink{
+				to{color: transparent;}
+			}
+			.blink2{
+				float: left;
+				margin: 20px;
+				font-size: 24px;
+				color: #FA8072;
+				animation-name:blink2;
+				animation-iteration-count: infinite;
+				animation-duration: 1s;
+				animation-timing-function: steps(1);
+			}
+			@-moz-keyframes blink2{
+				50%{color: transparent;}
+			}
+			@-webkit-keyframes blink2{
+				50%{color: transparent;}
+			}
+			.mazi{
+				padding: 1em calc(50%-600px);
+				text-align: center;
+				color: #FF7F50;
+				background: #2FA0EC;
+			}
+			.quanj{
+				float: left;
+				width: 300px;
+				height: 300px;
+				background: url(img/1_120428142107_2.jpg);
+				background-size: auto 100%; 
+				animation: pan 5s linear infinite alternate;
+				animation-play-state: paused;
+			}
+			@-moz-keyframes pan{
+				to{background-position:100% 0 ; }
+			}
+			.quanj:hover{
+				animation-play-state: running;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<a  class="button">我是一个倾斜的矩形</a> 
+		<img src="img/psb.jpg" class="img" />
+		<div class="corner do1"></div>
+		<div class="corner do2"></div>
+		<div class="corner do3">
+			你敢信这里是一个梯形？
+		</div>
+		<br />
+		<div class="corner"> 
+		<div class="pie"></div>
+		</div>
+		<div class="corner">
+		<div class="pie2" style=" animation-delay:-20s ;"><span>您有20%的几率获奖</span></div>
+		<!--作者：1139283209@qq.com时间：2016-08-20描述--饼图效果 负的动画延迟意味着动画会立即开始播放，但是会自动前进到延时的绝对值处，实际效果就是动画跳过指定时间从中间开始播放-->
+		</div>
+		<!--单侧投影 -->
+		<div class="shadowbox shadowbox1"></div>
+		<!--双侧投影 -->
+		<div class="shadowbox shadowbox2"></div>
+		<!--滤镜效果 -->
+		<div class="shadowbox"><img class="sha1" src="img/1377575438192.jpg"></div>
+		<div class="shadowbox"><img class="sha2" src="img/1_120428142107_2.jpg"></div>
+		<!--混合模式(不过需要两层结构) -->
+		<a class="blend"><img src="img/28.jpg">混合模式</a>
+		<!--混合模式(一层结构！) -->
+		<div class="tinted-img"></div><br />
+		<div class="clear"></div>
+		<div class="test-content">
+			<p class="content">天将降大任于斯人也，必先卸其QQ，封其微博，删其微信，去其贴吧，
+			收其电脑，夺其手机，摔其ipad，断其wifi，剪其网线，使其百无聊赖，
+			然后静坐、喝茶、思过、锻炼、读书、弹琴、练字、明智、开悟、精进，而后必成大器也。
+			使用伪元素制作毛玻璃背景会有溢出的效果需要溢出隐藏。</p>
+		</div>
+		<div class="clear"></div>
+		<div class="do4 fanz"></div>
+		<div class="do4 fanz2" lang="en">Everyone has their own dreams, I am the same. But my dream is not a lawyer, not a doctor, 
+			not actors, not even an industry. Perhaps my dream big people will find it ridiculous, but this has been 
+			my pursuit! My dream is to want to have a folk life!</div>
+		<div class="do4 fanz3">
+			<dl>
+				<dt>姓名:</dt>
+				<dd>dayang</dd>
+				<dt>邮箱:</dt>
+				<dd>dayang@xxxxx</dd>
+				<dd>dayang@xxxxx</dd>
+				<dt>地址:</dt>
+				<dd>dayang啦啦啦啦</dd>
+			</dl>
+		</div>
+		<div class="do5">天将降大任于斯人也，必先卸其QQ，封其微博，删其微信，去其贴吧，
+			收其电脑，夺其手机，摔其ipad，断其wifi，剪其网线，使其百无聊赖，
+			然后静坐、喝茶、思过、锻炼、读书、弹琴、练字、明智、开悟、精进，而后必成大器也。</div>
+		<pre class="code">
+			if(text.indexOf("代金券")>0){
+			  	var img= document.getElementById("shan-img");
+			  	img.onload=function(){  
+				  	ctx.drawImage(img,-15,30);      
+			  	}; 
+			  	ctx.drawImage(img,-15,30);  
+		  	  }else if(text.indexOf("谢谢参与")>=0){
+			  	var img= document.getElementById("sorry-img");
+			  	img.onload=function(){  
+				  	ctx.drawImage(img,-15,10);      
+			 	 };  
+			 	ctx.drawImage(img,-15,10);  
+		</pre>
+		<div class="clear"></div>
+		<a class="lizi textShadow">
+			今天是8月22日，今天做了很多的测试，测试了很多的新功能，对于今后的网站发展有了一定积极作用
+		</a>
+		<a class="lizi light">发光文字</a>
+		<a class="lizi projection">文字凸起</a>
+		<a class="hot"></a>
+		<div class="lizi check">
+			<input type="checkbox" id="awesome" />
+			<label for="awesome">你猜对了！</label>
+		</div>
+		<div class="clear"></div>
+		<div class="wuxu">
+			<ul>
+				<li>诚信商贸</li>
+				<li>旅游行业</li>
+				<li>ajax教程</li>
+				<li>seo搜索引擎推广</li>
+				<li>javascript高级程序设计</li>
+				<li>最美中国</li>
+				<li>javascript权威指南</li>
+				<li>html5权威指南</li>
+				<li>css权威指南</li>
+				<li>css sercet</li>
+				<li>javascript高级程序设计</li>
+				<li>最美中国</li>
+				<li>javascript权威指南</li>
+				<li>html5权威指南</li>
+				<li>css权威指南</li>
+				<li>css sercet</li>
+				<li>html5权威指南</li>
+				<li>html5权威指南</li>
+				<li>html5权威指南</li>
+			</ul>
+		</div>
+		<div class="image-slider">
+			<div>
+				<img src="img/255_133732_efb8a.jpg" />
+			</div>
+			<img src="img/528737c940449.jpg" />
+ 		</div>
+		<figure>
+			<img src="img/20150923164725_kk-0.png" />
+			<figcaption>
+				自适应内部内容宽度与高度，他为width 与height定义了新的关键字
+				这里是min-content，解析为容器内部最大的不可断行的宽度。
+			</figcaption>
+		</figure>
+		<div class="xuanze">
+			<ul>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+			</ul>
+			<ul>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</ul>
+		</div>
+		<div class="ball"></div>
+		<div class="clear"></div>
+		<div class="blink">可以闪动的文字</div>
+		<div class=" blink2">能动啥，你能看到啥</div>
+			<div class="quanj"></div>
+		<div class="clear"></div>
+		<div class="mazi">
+			<h1>this is css,css is awesome</h1>
+		</div>
+	
+		
+		<footer>
+			这里是页脚。这个网页内所有案例都是css揭秘中的，他给出当今时间最先进的减少代码数量
+			改善网页布局以及便于理解的css代码书籍，里面有很多css效果是当今最先进的效果，他省去了图片
+			的布局。这个页脚的布局是使用的一层html节奏搭建出了页脚居中效果，改善了过去两层div居中的效果。
+		</footer>
+		
+	<script>
+		//什么是依赖注入
+		var service=function  () {
+			return{name:"service"};
+		}
+		var router=function  () {
+			return{name:"router"}
+		}
+		var dosomething=function  (service,router,other) {
+			s=service();
+			r=router();
+		}
+		var a1=10
+		console.log(a1++)
+		console.log(a1)
+		
+		//forEach用法
+		var a2=[1,2,3,4,5]
+		var a3=0
+		a2.forEach(
+			function(value){a3+=value}
+		);
+		console.log(a3);
+		a2.forEach(
+			function(v,i,a){a[i]=v+1}
+		);
+		console.log(a2);
+		//map用法
+		
+		a4=a2.map(function(x){return x*x})
+		console.log("map不修改数组"+a2);
+		console.log("新数组"+a4);
+		 //filter用法
+		 
+		var a=9
+		function fn(){
+			a=0
+			return function(b){return b+a++;}
+		}
+		var f=fn()
+		var m=f(5);console.log("m="+m);
+		var n=fn()(5);console.log("n="+n);
+		var x=f(5);console.log("x="+x);
+		console.log(a);
+		//
+		var a5=a2.every(function(x){return x>4})
+		console.log("every函数"+a5)
+		var a6=a2.some(function(x){return x>4})
+		console.log("some函数"+a6);
+		
+		var a6=a2.reduce(function(x,y){return x+y})
+		console.log(a6);
+		var a7=a2.indexOf(0)
+		console.log("index返回的是"+a7)
+	</script>
+	</body>
+</html>

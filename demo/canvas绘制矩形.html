@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>绘制矩形</title>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+		
+		<script>
+	     window.onload=function () {
+        var canvas = document.getElementById('canvas');
+
+        canvas.width = 800;
+        canvas.height = 800;
+
+        var context = canvas.getContext('2d');
+        
+        context.save()
+        context.fillStyle='#058'
+        context.shadowColor='black';
+        context.shadowOffsetX=20;
+        context.shadowOffsetY=20;
+        context.shadowBlur=10;
+        context.fillRect(20,20,100,100);
+        context.restore();
+        drawRoundRect(context,300,300,300,300,50);
+    };
+        function drawRoundRect(cxt, x, y, width, height, radius) {
+            cxt.save();
+            cxt.translate(x, y);
+            pathRoundRect(cxt, width, height, radius);
+            cxt.strokeStyle = "black";
+            cxt.stroke();
+            cxt.restore();
+        }
+
+        function pathRoundRect(cxt, width, height, radius) {
+            //绘制方向：右下角->左下角->左上角->closePath()
+            cxt.beginPath();
+            cxt.arc(width - radius, height - radius, radius, 0, Math.PI *0.5);
+            //cxt.lineTo(radius, height);
+            cxt.arc(radius, height - radius, radius, Math.PI *0.5, Math.PI);
+            //cxt.lineTo(0, radius);
+            cxt.arc(radius, radius, radius, Math.PI, Math.PI * 1.5);
+            //cxt.lineTo(width - radius, 0);
+            cxt.arc(width - radius, radius, radius, Math.PI * 1.5, Math.PI * 2);
+            cxt.closePath();
+        }
+			
+			
+			
+		</script>
+		
+		
+		
+	</body>
+</html>

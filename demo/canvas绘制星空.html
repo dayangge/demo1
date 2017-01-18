@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>绘制星空</title>
+	<style>
+		canvas{border:1px solid #ddd; background: #000;}
+	</style>
+</head>
+<body>
+<canvas id="canvas" width="1200" height="800"></canvas>
+<script type="text/javascript">
+	var canvas=document.getElementById('canvas');
+	var context=canvas.getContext('2d');
+	var skyColor=context.createLinearGradient(0,0,0,800);//添加渐变
+	skyColor=context.createRadialGradient(600,800,800,600,800,200)
+	skyColor.addColorStop(0,'black');
+	skyColor.addColorStop(1,'#058');
+	context.fillStyle=skyColor;
+	context.rect(0,0,1200,800);
+	context.fill();
+	
+	fillMoon(context,2,800,200,100,30);
+	
+	for(var i=0; i<100; i++){
+		var R=Math.random()*10+5;
+		var x=Math.random()*1200;
+		var y=Math.random()*800*0.65;
+		var a =Math.random()*360;
+		drawStar(context, x, y, R,a);
+	}
+		drawland(context);
+	function drawland(cxt){
+		cxt.save();
+		cxt.beginPath();
+		cxt.moveTo(0,600);
+		cxt.bezierCurveTo(440,400,660,800,1200,600);//3次贝塞尔曲线
+		cxt.lineTo(1200,800);
+		cxt.lineTo(0,800);
+		cxt.closePath();
+		var landColor=context.createLinearGradient(0,800,0,400);//添加渐变
+		landColor.addColorStop(0,'#120');
+		landColor.addColorStop(1,'#680');
+		cxt.fillStyle=landColor
+		cxt.fill();
+		cxt.restore();
+	}
+function drawStar(cxt,x,y,R,rot){
+	cxt.save();
+	cxt.translate(x,y);
+	cxt.rotate(rot/180*Math.PI);
+	cxt.scale(R,R);
+	starPath(cxt);
+	cxt.fillStyle='#fb3';
+	// cxt.strokeStyle='#fd5';
+	// cxt.lineWidth=3;
+	// cxt.lineJoin='round';
+	cxt.fill();
+	// cxt.stroke();
+	cxt.restore();
+}
+	function starPath(cxt){
+		cxt.beginPath();
+		for(var i=0; i<5; i++){
+			cxt.lineTo(Math.cos((18+i*72)/180*Math.PI),
+										 -Math.sin((18+i*72)/180*Math.PI));
+		 	cxt.lineTo(Math.cos((54+i*72)/180*Math.PI)*0.5,
+										 -Math.sin((54+i*72)/180*Math.PI)*0.5);
+		}
+		cxt.closePath();
+	}
+	
+    function fillMoon(cxt, d, x, y, R, rot, fillColor) {//d为控制点的横坐标
+        cxt.save();
+        cxt.translate(x,y);
+        cxt.rotate(rot*Math.PI/180);
+        cxt.scale(R,R);
+        pathMoon(cxt,d);
+        cxt.fillStyle = fillColor || "#fb5";
+        cxt.fill();
+        cxt.restore();
+    }
+
+    function pathMoon(cxt, d) {
+        cxt.beginPath();
+        cxt.arc(0,0,1,0.5*Math.PI,1.5*Math.PI,true);
+        cxt.moveTo(0,-1);
+        cxt.arcTo(d,0,0,1,dis(0,-1,d,0) / d);
+        cxt.closePath();
+    }
+
+    function dis(x1, y1, x2, y2) {
+        return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+    }
+</script>
+</body>
+</html>
+
+
+

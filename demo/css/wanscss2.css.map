@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAqCA,KAAK;EAnBD,KAAK,EAoBQ,GAAG;EAnBhB,MAAM,EAmBW,GAAG;EAlBpB,QAAQ,EAAE,QAAQ;EAClB,MAAM,EAAE,iBAAoB;EAC5B,gBAAgB,EAAE,sBAAkB",
+"sources": ["../../../../../%E7%94%A8%E6%88%B7%E7%9B%AE%E5%BD%95/%E6%88%91%E7%9A%84%E6%96%87%E6%A1%A3/HBuilderProject/demo/css/wanscss2.scss"],
+"names": [],
+"file": "wanscss2.css"
+}

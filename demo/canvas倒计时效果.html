@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/digit.js"></script>
+		
+	</head>
+	<body style="height: 100%;">
+		<canvas id="canvas" style="height: 100%;"></canvas>
+		<script>
+		var WINDOW_WIDTH = 1024;
+		var WINDOW_HEIGHT = 768;
+		var RADIUS = 8;
+		var MARGIN_TOP = 60;
+		var MARGIN_LEFT = 30;
+		/*var endtime=new Date()//月份是从0开始的0代表1月份
+		endtime.setTime(endtime.getTime()+3600*1000)*/
+		
+		var curshowtime=0;
+		var balls = [];
+		const colors = ["#33B5E5","#0099CC","#AA66CC","#9933CC","#99CC00","#669900","#FFBB33","#FF8800","#FF4444","#CC0000"]
+		
+			window.onload=function(){
+				var canvas=document.getElementById('canvas');
+				var context=canvas.getContext('2d');
+					 WINDOW_WIDTH = document.body.clientWidth||document.documentElement.clientWidth
+				    WINDOW_HEIGHT = document.body.clientHeight||document.documentElement.clientHeight
+				    MARGIN_LEFT = Math.round(WINDOW_WIDTH /10);
+				    RADIUS = Math.round(WINDOW_WIDTH * 4 / 5 / 108)-1
+				    MARGIN_TOP = Math.round(WINDOW_HEIGHT /5);
+				    canvas.width=WINDOW_WIDTH;
+				    /*踩过的坑：设置全屏显示必须body和html全是100%*/
+				    canvas.height=WINDOW_HEIGHT;
+   				 curshowtime=getcurtime();
+   				 setInterval(
+   				 	function(){
+   				 		render(context);
+   				 		update();
+   				 	},50
+   				 )
+   				 
+				function getcurtime(){
+					  var curtime=new Date();
+				/*	  var countime=endtime.getTime()-curtime.getTime();
+					  countime=Math.round(countime/1000);*/
+					  var countime=curtime.getHours()*3600+curtime.getMinutes()*60+curtime.getSeconds()//从倒计时效果改为当前时间的效果
+					  return countime>= 0 ? countime : 0 ;
+					}
+				
+				function update(){
+   				 	var nexttime=getcurtime();
+   				 	var nextHours = parseInt( nexttime / 3600);
+ 					var nextMinutes = parseInt( (nexttime - nextHours * 3600)/60 )
+ 					var nextSeconds = nexttime % 60
+
+  					var curHours = parseInt( curshowtime / 3600);
+  					var curMinutes = parseInt( (curshowtime - curHours * 3600)/60 )
+  					var curSeconds = curshowtime % 60
+  					if(nexttime!=curshowtime){
+  						if( parseInt(curHours/10) != parseInt(nextHours/10) ){
+				            addBalls( MARGIN_LEFT + 0 , MARGIN_TOP , parseInt(curHours/10) );
+				        }
+				        if( parseInt(curHours%10) != parseInt(nextHours%10) ){
+				            addBalls( MARGIN_LEFT + 15*(RADIUS+1) , MARGIN_TOP , parseInt(curHours/10) );
+				        }
+				
+				        if( parseInt(curMinutes/10) != parseInt(nextMinutes/10) ){
+				            addBalls( MARGIN_LEFT + 39*(RADIUS+1) , MARGIN_TOP , parseInt(curMinutes/10) );
+				        }
+				        if( parseInt(curMinutes%10) != parseInt(nextMinutes%10) ){
+				            addBalls( MARGIN_LEFT + 54*(RADIUS+1) , MARGIN_TOP , parseInt(curMinutes%10) );
+				        }
+				
+				        if( parseInt(curSeconds/10) != parseInt(nextSeconds/10) ){
+				            addBalls( MARGIN_LEFT + 78*(RADIUS+1) , MARGIN_TOP , parseInt(curSeconds/10) );
+				        }
+				        if( parseInt(curSeconds%10) != parseInt(nextSeconds%10) ){
+				            addBalls( MARGIN_LEFT + 93*(RADIUS+1) , MARGIN_TOP , parseInt(nextSeconds%10) );
+				        }
+				     	 curshowtime=nexttime;
+				 		   }
+				 		   updateBalls()
+				 		   console.log( balls.length)
+  					}
+  					
+  					function updateBalls(){
+  					for (var i=0;i<balls.length;i++) {
+  						balls[i].x+=balls[i].vx;//x的速度自增vx
+  						balls[i].y+=balls[i].vy;//y的速度自增vy
+  						balls[i].vy+=balls[i].g;//vy的速度有加速度g
+  						if(balls[i].y >=WINDOW_HEIGHT-RADIUS){//判读是否到底，反弹
+          				   balls[i].y = WINDOW_HEIGHT-RADIUS;
+  						   balls[i].vy = -balls[i].vy*0.75
+  						}
+  					}
+  					  var cnt = 0
+					    for( var i = 0 ; i < balls.length ; i ++ )
+					        if( balls[i].x + RADIUS > 0 && balls[i].x -RADIUS < WINDOW_WIDTH )
+					            balls[cnt++] = balls[i]//cnt的数量都是在增加的如果找到了符合要求的小球就加入cnt里
+					    while( balls.length > Math.min(300,cnt) ){//超过的cnt的长度的小球都是不符合要求的
+					        balls.pop();//删除数组最后一个元素
+   					 }
+  				}
+  					
+  				function addBalls(x,y,mun){
+  					for(var i=0;i<digit[mun].length;i++){
+  						for (var j=0;j<digit[mun][i].length;j++) {
+  							if(digit[mun][i][j]==1){
+  								var aBall={
+  									x:x+j*2*(RADIUS+1)+(RADIUS+1),//初始坐标
+  									y:y+i*2*(RADIUS+1)+(RADIUS+1),//初始纵坐标
+  									g:1.5+Math.random(),//加速度
+  									vx:Math.pow( -1 , Math.ceil( Math.random()*1000 ) ) * 4,//初始x速度
+  									vy:-5,//初始y速度
+  									color:colors[Math.floor(Math.random()*10)]//初始颜色
+  								};
+  									balls.push(aBall);
+  							}
+  						}
+  					}
+   				 }
+				function render(cxt){
+					cxt.clearRect(0,0,WINDOW_WIDTH,WINDOW_HEIGHT)
+					var hours=parseInt(curshowtime / 3600);
+					var minter=parseInt( (curshowtime - hours * 3600)/60 );
+					var second=curshowtime % 60;	
+					render_can(MARGIN_LEFT,MARGIN_TOP,parseInt(hours/10),cxt);
+					render_can(MARGIN_LEFT+15*(RADIUS+1),MARGIN_TOP,parseInt(hours%10),cxt);
+					render_can(MARGIN_LEFT+30*(RADIUS+1),MARGIN_TOP,10,cxt);
+					render_can(MARGIN_LEFT+39*(RADIUS+1),MARGIN_TOP,parseInt(minter/10),cxt);
+					render_can(MARGIN_LEFT+54*(RADIUS+1),MARGIN_TOP,parseInt(minter%10),cxt);
+					render_can(MARGIN_LEFT+69*(RADIUS+1),MARGIN_TOP,10,cxt);
+					render_can(MARGIN_LEFT+78*(RADIUS+1),MARGIN_TOP,parseInt(second/10),cxt);
+					render_can(MARGIN_LEFT+93*(RADIUS+1),MARGIN_TOP,parseInt(second%10),cxt);
+					for(var i=0;i<balls.length;i++){
+						cxt.fillStyle=balls[i].color;
+						cxt.beginPath();
+						cxt.arc(balls[i].x,balls[i].y,RADIUS,0,2*Math.PI,true);
+						cxt.closePath();
+						cxt.fill();
+					}
+				}
+				function render_can(x,y,c,cxt){
+					cxt.fillStyle='#058'
+					for(var i=0;i<digit[c].length;i++){
+						for(var j=0;j<digit[c][i].length;j++){
+							if(digit[c][i][j]==1){
+							cxt.beginPath()
+							cxt.arc(x+j*2*(RADIUS+1)+(RADIUS+1) , y+i*2*(RADIUS+1)+(RADIUS+1) , RADIUS , 0 , 2*Math.PI)
+							cxt.closePath()
+              				cxt.fill()
+						}
+						}
+					}
+				}
+			}
+		</script>
+	
+	</body>
+</html>

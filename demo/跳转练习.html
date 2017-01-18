@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			p{font-size: 24px;margin-left: 20%;margin-bottom: 50px;}
+			a{text-decoration: underline;color: cornflowerblue;}
+		</style>
+	</head>
+	<body>
+		<p>操作成功</p>
+		<p><span id="time">5</span>秒内<a id="back">返回</a>到首页</p>
+		<script>
+			function conut () {
+				time=document.getElementById("time").innerHTML
+				time--;
+				document.getElementById("time").innerHTML=time
+				if(time<0){document.location.href="http://www.tianbaocs.com"}
+			}
+			setInterval(conut,1000)
+		</script>
+	</body>
+</html>

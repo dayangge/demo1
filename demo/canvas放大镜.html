@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body style="background: black;">
+		<canvas id="canvas" style="margin: 0 auto;display: block;border: 1px snow solid;box-shadow: #F5F5DC 3px 3px 6px;"></canvas>	
+		<script>
+			var canvas=document.getElementById('canvas');
+			var context=canvas.getContext('2d');
+			var image=new Image();
+			var isMoving=false;
+			image.src='img/255_133732_efb8a.jpg';
+			canvas.width=960;
+			canvas.height=600;
+			image.onload=function(){
+			context.drawImage(image,0,0,canvas.width,canvas.height);
+			}
+			function canvasPoint(x,y){
+				var bBox=canvas.getBoundingClientRect();
+				return{x:x - bBox.left,y:y - bBox.top};
+			}
+			
+			canvas.onmousedown=function(e){
+				e.preventDefault();
+				isMoving=true;
+				var point=canvasPoint(e.clientX,e.clientY);
+				drawShowManifier(true,point);
+			}
+			
+			canvas.onmousemove=function(e){
+				e.preventDefault();
+				if(isMoving){
+				var point=canvasPoint(e.clientX,e.clientY);
+				drawShowManifier(true,point);
+				}
+			}
+			
+			canvas.onmouseup=function(e){
+				e.preventDefault();
+				isMoving=false;
+				drawShowManifier(false);
+			}
+			
+			canvas.onmouseleave=function(e){
+				e.preventDefault();
+				isMoving=false;
+				drawShowManifier(false);
+			}
+			
+			function drawShowManifier(x,y){
+				context.clearRect(0,0,canvas.width,canvas.height);
+				context.drawImage(image,0,0,canvas.width,canvas.height);
+				if(x==true){
+					drawManifier(y);
+				}else{
+					return false;
+				}
+			}
+			
+			function drawManifier(x){
+			var	sx=(x.x-100)*2;
+			var	sy=(x.y-100)*2;
+			var	dr=200;
+			var	dx=x.x-200;
+			var	dy=x.y-200;
+				context.save();
+				context.beginPath();
+				context.lineWidth=10;
+				context.arc(x.x,x.y,dr,0,Math.PI*2);
+				context.strokeStyle='blueviolet';
+				context.stroke();
+				context.clip();
+				context.drawImage(image,sx,sy,400,400,dx,dy,400,400);
+				context.restore();
+			}
+		</script>
+		
+		
+	</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#a1{
+				width: 300px;
+				height: 300px;
+				background: #9ACD32;
+				border: 1px solid salmon;
+				opacity: 0.3px;
+				position: relative;
+				left: 100px;
+			}
+			.p{
+				display: inline-block;
+				padding: 0 10px;
+				font-size: 20px;
+				line-height: 600px;
+				border: 1px solid #0000FF;
+			}
+		</style>
+	</head>
+	<body>
+	<div id="a1"></div>
+	<div class="p">这事一个字</div>
+	</body>
+	<script>
+	var 	a1=document.getElementById('a1')
+	startMove(a1,{'width':301,'height':400},startMove(a1,{'left':300}))
+	var timer=null;
+	var alpha=30;
+	function startMove(obj,json,fn){
+		clearInterval(timer);
+		timer=setInterval(function(){
+			var flag=true,icur=0;
+			for(var attr in json){
+			if(attr=='opacity'){
+				icur=Math.round(parseFloat(getStyle(obj,attr))*100);
+				}
+			else{
+				 icur=parseInt(getStyle(obj,attr));
+			}
+			var speed=(json[attr]-icur)/10;
+			speed=speed>0?Math.ceil(speed):Math.floor(speed);
+			if(icur!=json[attr]){
+				flag=false;}
+				if(attr=='opacity'){
+						obj.style.filter='alpha(opacity:'+(icur+speed)+')';
+						obj.style.opacity=(icur+speed)/100;
+						}
+						else{
+					obj.style[attr]=icur+speed+"px";}
+				}
+				if(flag){
+					clearInterval(obj.timer)
+					if(fn){
+						fn();
+					}
+					}
+			}
+			,30);
+		}
+	function getStyle(obj,attr){
+	if(obj.currentStyle){
+		return obj.currentStyle;
+		}
+		else{
+			return getComputedStyle(obj,false)[attr];
+			}
+	}
+	</script>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+.clearfix:after { 
+    content:"\200B"; 
+    display:block; 
+    height:0; 
+    clear:both; 
+} 
+.clearfix {*zoom:1;}/*IE/7/6*/
+		</style>
+	</head>
+	<body>		
+		<div id="box">
+		<input type="button" value="按钮" id="btn1" />
+		<input type="button" value="按钮" id="btn2" />
+		<input type="button" value="IE事件处理程序" id="btn3"/>
+		<a href="deom.html" id="a1">gogogo</a>
+		</div>
+		
+		
+		
+		
+		
+		
+		<script>
+			/*function hai(){
+				alert("你好")
+			}
+			var btn1=document.getElementById("btn1");
+			//事件监听
+			btn1.addEventListener("click",hai,false)
+			//添加多个事件处理程序
+			var btn2=document.getElementById("btn2");
+			btn1.addEventListener("click",function(){
+				alert(this.value)
+			},false)
+			var btn3=document.getElementById("btn3")
+			btn3.attachEvent("onclick",hai);*/
+			//跨浏览器兼容
+			var eventUtil={
+				//添加句柄
+				addHandler:function(element,type,handler){
+					if(element.addEventListener){
+						element.addEventListener(type,handler,false)
+					}else if(element.attachEvent){
+						element.attachEvent('on'+type,handler)
+					}else{
+						element['on'+type]=handler
+					}		
+				},
+				//删除句柄
+				removeHandler:function(element,type,handler){
+					if(element.removeEventListener){
+						element.removeEventListener(type,handler,false)
+					}else if(element.detach){
+						element.detachEvent('on'+type,handler)
+					}else{
+						element['on'+type]=null
+					}
+				},
+				getEvent:function(event){
+					return event?event:window.event;
+				},
+				getType:function(event){
+					return event.type;
+				},
+				getElement:function(event){
+					return event.target||event.srcElement;
+				},
+				preventDafault:function(event){
+					if(event.preventDefault){
+						event.preventDefault();
+					}else{
+						event.returnValue=false;
+					}
+				},
+				stopPropagation:function(event){
+					if(event.stopPropagation){
+						event.stopPropagation();
+					}else{
+						event.cancelBubble=true;
+					}
+				},
+			};		
+			var btn3=document.getElementById("btn3");
+			var box=document.getElementById("box");
+			var a1=document.getElementById("a1");
+			function hai2(){
+				alert("hahah")
+			};	
+			eventUtil.addHandler(box,'click',hai2);
+			eventUtil.addHandler(a1,'click',function(e){
+				e=eventUtil.getEvent(e);
+				alert(eventUtil.getElement(e).nodeName);
+				eventUtil.preventDafault(e);
+				eventUtil.stopPropagation(e);
+			}
+			);
+			//ie中的事件对象浏览器兼容
+			
+			
+			
+			
+		</script>
+	</body>
+</html>

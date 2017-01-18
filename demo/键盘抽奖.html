@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title>新闻切换技术</title> 
+<style type="text/css"> 
+body { text-align: center; margin:0; padding:0; background: #FFF; font-size:12px; color:#000;} 
+div,form,img,ul,ol,li,dl,dt,dd {margin: 0; padding: 0; border: 0;} 
+h1,h2,h3,h4,h5,h6 { margin:0; padding:0;} 
+table,td,tr,th{font-size:12px;} 
+a:link {color: #000; text-decoration:none;} 
+a:visited {color: #83006f;text-decoration:none;} 
+a:hover {color: #c00; text-decoration:underline;} 
+a:active {color: #000;} 
+*{font-family:"微软雅黑" ; font-size:30px ;line-height: 30px;}
+a{margin-bottom: 30px;display: block;margin-top: 30px;}
+input{width: 150px; height: 50px;background-color: #2FA0EC; color: white;margin-bottom: 30px;}
+#moveA{width: 200px;height: 200px;position: relative;left: -200px;box-sizing: border-box;border: 1px solid saddlebrown;}
+.moves{width: 30px;height: 30px;position: absolute; background: #83006F;right: -30px;transform: translateY(50%);}
+
+</style> 
+</head> 
+
+<body> 
+<a id="title">开始抽奖</a><br />
+<input type="button" value="开始"  id="play">
+<input type="button" value="停止" id='stop'>
+<div id="moveA">
+	<div class="moves"></div>
+</div>
+
+
+
+<script>
+	var data=['iphone','ipad','三星','佳能','惠普打印机','50元手机充值卡','100元手机充值卡','京东购物卡','谢谢参与'],
+		timer=null,flag=0;	
+		
+	var title=document.getElementById('title'),
+		play=document.getElementById('play'),
+		stop=document.getElementById('stop'),
+		moveA=document.getElementById('moveA');
+		
+		
+		//开始抽奖 
+		play.onclick=playFun;
+		stop.onclick=stopFun;
+		moveA.onmouseover=moveFun1;
+		
+		function moveFun1(){
+		}
+		function playFun(){
+			var that=this;
+			clearInterval(timer);
+			play.style.background='#999'
+			timer=setInterval(function(){
+				var random=Math.floor(Math.random()*data.length);
+				title.innerHTML=data[random];
+			},50)
+		};
+		function stopFun(){
+			clearInterval(timer);
+			play.style.background='#2FA0EC'
+		}
+		document.onkeyup=function(event){
+			var en=event.keyCode
+			if(en==13){
+				if(flag==0){
+					playFun();
+					flag=1;
+				}else{
+					stopFun();
+					flag=0;
+				}
+			}
+		}
+			function getStyle(obj,attr){
+		if(obj.currentStyle){
+			return obj.currentStyle(attr);
+		}else{
+			return getComputedStyle(obj,false)[attr];
+		}
+	}
+	
+</script>
+</body> 
+</html>

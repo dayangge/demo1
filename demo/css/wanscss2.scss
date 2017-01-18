@@ -1,0 +1,67 @@
+$border:1px;
+$color:#000000;
+$zongheight:6530px;
+$contaninerwidth:1024px;
+$rowheight1:520px;
+$rowheight2:1520px;
+$rowheight3:2520px;
+$rowheight4:3520px;
+$rowheight5:4520px;
+$rowheight6:5520px;
+$colwidth1:50px;
+$colwidth2:460px;
+$colwidth3:780px;
+$colwidth4:0;
+$product:a;
+$bgcolor:#34a;
+
+@mixin box($width,$height){
+    width: $width;
+    height: $height;
+    position: absolute;
+    border: $border solid $color;
+    background-color: rgba($bgcolor,0.5);
+}
+@mixin dingwei($a,$b){
+    top: $a;
+    left: $b;
+}
+@mixin block($boolean:ture){
+    @if $boolean{
+        display: block;
+    }
+    @else{
+        display: none !important;
+    }
+}
+
+.box1{
+    @include box(200,300)
+}
+
+
+//$list: 1 2 3 4 5 6;
+//@mixin product{
+//  @each $mumber in $list{
+//      .a#{mumber}{
+//          top: $rowheight1;
+//          left: $colwidth#{$mumber};
+//      }
+//  }
+//}
+//.b{
+//  @include  product;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+

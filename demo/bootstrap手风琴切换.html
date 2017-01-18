@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/zzsc.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<style type="text/css">
+	a:hover, a:focus{
+		outline: none;
+		text-decoration: none;
+	}
+	#accordion .panel{
+		box-shadow: none;
+		border: none;
+		border-radius:0;
+		margin-bottom: 6px;
+		border-left:5px solid #944f95;
+	}
+	#accordion .panel-heading{
+		padding:0;
+		background-color:#fff;
+	}
+	#accordion .panel-title a{
+		display: block;
+		color: #333;
+		font-size: 15px;
+		font-weight: bold;
+		padding: 14px 40px;
+		background: #f5f5f5;
+		text-transform: uppercase;
+		border-bottom: 1px solid #d3d3d3;
+		position: relative;
+	}
+	#accordion .panel-title a.collapsed{
+		border-top: 0;
+		color: #333;
+		background: #eee;
+		border-bottom:1px solid transparent;
+	}
+	#accordion .panel-title a:before,
+	#accordion .panel-title a.collapsed:before{
+		content: "\f068";
+		font-family: FontAwesome;
+		position: absolute;
+		top: 10px;
+		left: 15px;
+		font-size: 14px;
+		line-height: 24px;
+		color: #944f95;
+	}
+	#accordion .panel-title a.collapsed:before{
+		content: "\f067";
+	}
+	#accordion .panel-body{
+		color: #666464;
+		font-size: 14px;
+		line-height: 20px;
+		border-top: 0 none;
+		background: #eee;
+		padding: 15px 27px;
+	}
+</style>
+		
+	</head>
+	<body>
+		<div class="demo">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingOne">
+							<h4 class="panel-title">
+								<a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+									Section 1
+								</a>
+							</h4>
+						</div>
+						<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+							<div class="panel-body">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean congue erat in luctus pretium. Praesent suscipit tempor consequat. Nam ac enim sit amet justo ultricies condimentum. Ut condimentum, risus at hendrerit ultricies, arcu diam lobortis metus, eu aliquam quam metus ut enim. Aliquam at mi quis tortor semper laoreet ut.
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingTwo">
+							<h4 class="panel-title">
+								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+									Section 2
+								</a>
+							</h4>
+						</div>
+						<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+							<div class="panel-body">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean congue erat in luctus pretium. Praesent suscipit tempor consequat. Nam ac enim sit amet justo ultricies condimentum. Ut condimentum, risus at hendrerit ultricies, arcu diam lobortis metus, eu aliquam quam metus ut enim. Aliquam at mi quis tortor semper laoreet ut.
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingThree">
+							<h4 class="panel-title">
+								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+									Section 3
+								</a>
+							</h4>
+						</div>
+						<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+							<div class="panel-body">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean congue erat in luctus pretium. Praesent suscipit tempor consequat. Nam ac enim sit amet justo ultricies condimentum. Ut condimentum, risus at hendrerit ultricies, arcu diam lobortis metus, eu aliquam quam metus ut enim. Aliquam at mi quis tortor semper laoreet ut.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>

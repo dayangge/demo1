@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>绘制全屏星星</title>
+	</head>
+	<body>
+		<canvas id="canvas">
+			
+		</canvas>
+		<script>
+			var canvas=document.getElementById('canvas');
+			var context=canvas.getContext('2d');
+			canvas.width=800;
+			canvas.height=800;
+			//画一个五角星
+			function drawstar(cxt,R,r,x,y,rot){
+				cxt.beginPath();
+				for (var i = 0; i < 5; i++) {
+					cxt.lineTo(Math.cos((18+i*72-rot)/180*Math.PI)*R+x,
+					-Math.sin((18+i*72-rot)/180*Math.PI)*R+y);
+					cxt.lineTo(Math.cos((54+i*72-rot)/180*Math.PI)*r+x,
+					-Math.sin((54+i*72-rot)/180*Math.PI)*r+y);
+				}
+				cxt.closePath();
+				cxt.lineWidth=2
+				cxt.lineJoin='bevel'
+				cxt.miterLimit=10;//miter是头部顶端，就是两条直线交接的处的链接头，miterlimit就是连接头的长度，bevel是斜接，round是圆角
+				cxt.stroke();
+			}
+			function huizhixk(){
+				for (var i = 0; i < 200; i++) {
+				var a=10+10*Math.random(),b=a/2,c=800*Math.random(),d=800*Math.random(),e=360*Math.random();
+					drawstar(context,a,b,c,d,e)
+					context.fillStyle='#058'
+					context.fill()
+				}
+			}
+			context.beginPath()
+			context.fillStyle='yellow'
+			context.rect(0,0,canvas.width,canvas.height)
+			context.fill();
+			context.closePath()
+			
+			huizhixk();
+		</script>
+		
+	</body>
+</html>

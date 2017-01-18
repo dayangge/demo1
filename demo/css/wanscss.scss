@@ -1,0 +1,209 @@
+$border:0px;
+$color:#000000;
+$zongheight:15080px;
+$contaninerwidth:1100px;
+$rowheight1:880px;
+$rowheight2:1459px;
+$rowheight3:2414px;
+$rowheight4:3025px;
+$rowheight5:4382px;
+$rowheight6:4867px;
+$rowheight7:5551px;
+$rowheight8:6112px;
+$rowheight9:6692px;
+$rowheight10:7268px;
+$rowheight11:7843px;
+$rowheight12:8574px;
+$rowheight13:9461px;
+$rowheight14:10240px;
+$rowheight15:11131px;
+$rowheight16:11899px;
+$rowheight17:12832px;
+$rowheight18:13531px;
+$rowheight19:24944px;
+$rowheight20:25080px;
+
+$colwidth1:0px;
+$colwidth2:478px;
+$colwidth3:550px;
+$colwidth4:0;
+
+@mixin box($width,$height){
+    width: $width;
+    height: $height;
+    position: absolute;
+    border: $border solid $color;
+}
+@mixin dingwei($a,$b){
+    top: $a;
+    left: $b;
+}
+@mixin block($boolean:ture){
+    @if $boolean{
+        display: block;
+    }
+    @else{
+        display: none !important;
+    }
+}
+
+
+.pageWidth{
+    width:100%;
+    }
+.top{
+    width: 1200px;
+    margin: 0 auto;
+    }
+.header{
+    @include block(false)  ;
+    }
+.menu{
+    display: none !important;
+    }
+.com_margintop{
+    margin-top: 0 !important;
+    }
+.zong{  
+        width: 100%;
+        background-image: url("http://www.tianbaocs.com/manager/uploads/ckEditUploadImg/2016/10/24/47e54daa2cfbabbce0b6d837bd4cf8c6.jpg");
+        background-position: center;
+        background-repeat:no-repeat ;
+        height: $zongheight;
+        margin-top:1px ;
+        }
+.container{
+         width: $contaninerwidth;
+         height: $zongheight;
+         margin: 0 auto;
+         position: relative;
+         border: $border solid $color;
+        }
+.box1{
+    @include box(1100px,548px);
+}
+.a1{
+    @include dingwei($rowheight1,$colwidth1)
+}      
+.a2{
+    @include dingwei($rowheight2,$colwidth1)
+}
+.box2{
+     @include box(478px,600px);
+ }
+.box3{
+     @include box(622px,600px);
+ }
+ .b1{
+     @include dingwei($rowheight3,$colwidth1)
+ }
+ .b2{
+     @include dingwei($rowheight3,$colwidth2)
+ }
+ .b3{
+     @include dingwei($rowheight4,$colwidth1)
+ }
+ .b4{
+     @include dingwei($rowheight4,$colwidth2)
+ }
+ .box4{
+     @include box(1100px,730px);
+ }
+ .c1{
+     @include dingwei($rowheight5,$colwidth1)
+ }
+ .box5{
+     @include box(1100px,485px);
+ }
+ .d1{
+     @include dingwei($rowheight5,$colwidth1)
+ }
+ .d2{
+     @include dingwei($rowheight6,$colwidth1)
+ }
+ 
+.e1{
+     @include dingwei($rowheight7,$colwidth1)
+}
+.e2{
+     @include dingwei($rowheight8,$colwidth1)
+}
+.e3{
+     @include dingwei($rowheight9,$colwidth1)
+}
+.e4{
+     @include dingwei($rowheight10,$colwidth1)
+}
+.box6{
+    @include box(550px,682px)
+}
+.f1{
+    @include dingwei($rowheight11,$colwidth1)
+}
+.f2{
+    @include dingwei($rowheight11,$colwidth3)
+}
+.f3{
+    @include dingwei($rowheight12,$colwidth1)
+}
+.f4{
+    @include dingwei($rowheight12,$colwidth3)
+}
+.box7{
+    @include box(550px,714px)
+}
+.g1{
+    @include dingwei($rowheight13,$colwidth1)
+}
+.g2{
+    @include dingwei($rowheight13,$colwidth3)
+}
+.g3{
+    @include dingwei($rowheight14,$colwidth1)
+}
+.g4{
+    @include dingwei($rowheight14,$colwidth3)
+}
+.g5{
+    @include dingwei($rowheight15,$colwidth1)
+}
+.g6{
+    @include dingwei($rowheight15,$colwidth3)
+}
+.g7{
+    @include dingwei($rowheight16,$colwidth1)
+}
+.g8{
+    @include dingwei($rowheight16,$colwidth3)
+}
+.g9{
+    @include dingwei($rowheight17,$colwidth1)
+}
+.g10{
+    @include dingwei($rowheight17,$colwidth3)
+}
+.g11{
+    @include dingwei($rowheight18,$colwidth1)
+}
+.g12{
+    @include dingwei($rowheight18,$colwidth3)
+}
+
+
+
+.box8{
+    @include box(160px,123px)
+}
+ @for $i from 1 through 6{
+     .x#{$i}{
+         top: $rowheight19;
+         left: -1px + 167px*($i - 1);
+     }
+ }
+  @for $i from 7 through 12{
+     .x#{$i}{
+         top: $rowheight20;
+         left: -1px + 167px*($i - 7);
+     }
+ } 
+ 

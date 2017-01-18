@@ -1,0 +1,113 @@
+.pageWidth { width: 100%; }
+
+.top { width: 1200px; margin: 0 auto; }
+
+.header { display: none !important; }
+
+.menu { display: none !important; }
+
+.com_margintop { margin-top: 0 !important; }
+
+.zong { width: 100%; background-image: url("http://www.tianbaocs.com/manager/uploads/ckEditUploadImg/2016/10/24/47e54daa2cfbabbce0b6d837bd4cf8c6.jpg"); background-position: center; background-repeat: no-repeat; height: 15080px; margin-top: 1px; }
+
+.container { width: 1100px; height: 15080px; margin: 0 auto; position: relative; border: 0px solid #000000; }
+
+.box1 { width: 1100px; height: 548px; position: absolute; border: 0px solid #000000; }
+
+.a1 { top: 880px; left: 0px; }
+
+.a2 { top: 1459px; left: 0px; }
+
+.box2 { width: 478px; height: 600px; position: absolute; border: 0px solid #000000; }
+
+.box3 { width: 622px; height: 600px; position: absolute; border: 0px solid #000000; }
+
+.b1 { top: 2414px; left: 0px; }
+
+.b2 { top: 2414px; left: 478px; }
+
+.b3 { top: 3025px; left: 0px; }
+
+.b4 { top: 3025px; left: 478px; }
+
+.box4 { width: 1100px; height: 730px; position: absolute; border: 0px solid #000000; }
+
+.c1 { top: 4382px; left: 0px; }
+
+.box5 { width: 1100px; height: 485px; position: absolute; border: 0px solid #000000; }
+
+.d1 { top: 4382px; left: 0px; }
+
+.d2 { top: 4867px; left: 0px; }
+
+.e1 { top: 5551px; left: 0px; }
+
+.e2 { top: 6112px; left: 0px; }
+
+.e3 { top: 6692px; left: 0px; }
+
+.e4 { top: 7268px; left: 0px; }
+
+.box6 { width: 550px; height: 682px; position: absolute; border: 0px solid #000000; }
+
+.f1 { top: 7843px; left: 0px; }
+
+.f2 { top: 7843px; left: 550px; }
+
+.f3 { top: 8574px; left: 0px; }
+
+.f4 { top: 8574px; left: 550px; }
+
+.box7 { width: 550px; height: 714px; position: absolute; border: 0px solid #000000; }
+
+.g1 { top: 9461px; left: 0px; }
+
+.g2 { top: 9461px; left: 550px; }
+
+.g3 { top: 10240px; left: 0px; }
+
+.g4 { top: 10240px; left: 550px; }
+
+.g5 { top: 11131px; left: 0px; }
+
+.g6 { top: 11131px; left: 550px; }
+
+.g7 { top: 11899px; left: 0px; }
+
+.g8 { top: 11899px; left: 550px; }
+
+.g9 { top: 12832px; left: 0px; }
+
+.g10 { top: 12832px; left: 550px; }
+
+.g11 { top: 13531px; left: 0px; }
+
+.g12 { top: 13531px; left: 550px; }
+
+.box8 { width: 160px; height: 123px; position: absolute; border: 0px solid #000000; }
+
+.x1 { top: 24944px; left: -1px; }
+
+.x2 { top: 24944px; left: 166px; }
+
+.x3 { top: 24944px; left: 333px; }
+
+.x4 { top: 24944px; left: 500px; }
+
+.x5 { top: 24944px; left: 667px; }
+
+.x6 { top: 24944px; left: 834px; }
+
+.x7 { top: 25080px; left: -1px; }
+
+.x8 { top: 25080px; left: 166px; }
+
+.x9 { top: 25080px; left: 333px; }
+
+.x10 { top: 25080px; left: 500px; }
+
+.x11 { top: 25080px; left: 667px; }
+
+.x12 { top: 25080px; left: 834px; }
+
+/*# sourceMappingURL=wanscss.css.map */

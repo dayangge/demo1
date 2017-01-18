@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin: 0 ;padding: 0;}
+			.box{margin: 0 auto;width: 600px; font-family: "微软雅黑";font-size: 18px;line-height: 24px;text-align: center;}
+			.award{line-height: 40px;}
+			#show{font-size:50px ;color:#0000FF;height: 50px;margin-top: 40px;text-align: center;}
+			#strat{background-color: #0C4E7C;width: 60px;height: 48px;}
+			#stop{background-color: #0C4E7C;width: 60px;height: 48px;}
+			#title1{width: 600px;height: 260px; font-size: 14px;line-height: 20px;color: #000000;}
+			#title2{width: 600px;height: 160px;font-size: 14px;line-height: 20px;color: #000000;}
+			#title3{width: 600px;height: 100px;font-size: 14px;line-height: 20px;color: #000000;}
+			#title4{width: 600px;height: 40px;font-size: 14px;line-height: 20px;color: #000000;}
+			input{line-height: 50px;color: white;font-size: 20px;}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+		<div id="show">开始抽奖</div>
+		<div class="award" style="color: #83006F;border: 1px solid saddlebrown;">四等奖获奖名单<div id="title1"></div></div>
+		<div class="award" style="color: #83006F;border: 1px solid saddlebrown;">三等奖获奖名单<div id="title2"></div></div>
+		<div class="award" style="color: #83006F;border: 1px solid saddlebrown;">二等奖获奖名单<div id="title3"></div></div>
+		<div class="award" style="color: #83006F;border: 1px solid saddlebrown;">一等奖获奖名单<div id="title4"></div></div>
+		<input id="strat" type="button" value="开始" />
+		<input id="stop"  type="button" value="抽奖"/>
+		</div>
+		
+		<script>
+		var data=[
+				'姓名1：1300000000',
+				'姓名2：1300000000',
+				'姓名3：1300000000',
+				'姓名4：1300000000',
+				'姓名5：1300000000',
+				'姓名6：1300000000',
+				'姓名7：1300000000',
+				'姓名8：1300000000',
+				'姓名9：1300000000',
+				'姓名10：1300000000',
+				'姓名11：1300000000',
+				'姓名12：1300000000',
+				'姓名13：1300000000',
+				'姓名14：1300000000',
+				'姓名15：1300000000',
+				'姓名16：1300000000',
+				'姓名17：1300000000',
+				'姓名18：1300000000',
+				'姓名19：1300000000',
+				'姓名20：1300000000',
+				'姓名21：1300000000',
+				'姓名22：1300000000',
+				'姓名23：1300000000',
+				'姓名24：1300000000',
+				'姓名25：1300000000',
+				'姓名26：1300000000',
+				'姓名27：1300000000',
+				'姓名28：1300000000',
+				'姓名29：1300000000',
+				'姓名30：1300000000',
+		];
+		var li=data.length;
+		var start=document.getElementById('strat');
+		var title1=document.getElementById('title1');
+		var title2=document.getElementById('title2');
+		var title3=document.getElementById('title3');
+		var title4=document.getElementById('title4');
+		var show=document.getElementById('show')
+		var timer=null;
+		var stop=document.getElementById('stop');
+		var isStart=0;
+		var random=0;
+		Array.prototype.remove = function(val) {
+			var index = this.indexOf(val);
+			if (index > -1) {
+			this.splice(index, 1);
+			}
+			};
+		start.onclick=startFun;
+		stop.onclick=playFun;
+		
+		function startFun(){
+			isStart=1;
+			clearInterval(timer);
+			start.style.background='#999'
+			timer=setInterval(function(){
+				var random=Math.floor(Math.random()*data.length);
+				show.innerHTML=data[random];
+			},50)
+			
+		}
+		function playFun(){
+			 if(isStart==1){
+			start.style.background='#2FA0EC'
+			var random=Math.floor(Math.random()*data.length);
+			 var newNode=document.createElement('a');
+			if(data.length>li - 10){
+				newNode.innerHTML=data[random]+'<br/>';
+				title1.appendChild(newNode);
+				data.remove(data[random])
+				console.log(data.length)
+			}else if(data.length>li-15){
+				newNode.innerHTML=data[random]+'<br/>';
+				title2.appendChild(newNode);
+				data.remove(data[random])
+			}else if(data.length>li-17){
+				newNode.innerHTML=data[random]+'<br/>';
+				title3.appendChild(newNode);
+				data.remove(data[random])	
+			}else if(data.length>li-18){
+				newNode.innerHTML=data[random];
+				title4.appendChild(newNode);
+				data.remove(data[random]);
+				clearInterval(timer);
+				show.innerHTML='抽奖结束';
+				stop.value='结束';
+				return false;
+			}
+			 isStart=0;
+			}
+			}
+		document.onkeyup=function(e){
+			var en=e.keyCode;
+			if(en==32){
+				if(isStart==0){
+					startFun();
+				}else{
+					playFun()
+				}
+			}
+		}
+		
+		</script>
+	</body>
+</html>
