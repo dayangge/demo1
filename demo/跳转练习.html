@@ -19,6 +19,37 @@
 				if(time<0){document.location.href="http://www.tianbaocs.com"}
 			}
 			setInterval(conut,1000)
+			//返回顶部代码
+			
+			backTop('#back-top'); /* 调用 backTop() 方法 */
+				function backTop(obj){
+				var screenH = document.documentElement.clientHeight;
+				var oBackTop = document.querySelector(obj);
+				var scrTop = 0;
+				var iSpeed = 0;
+				var scrollTopTemp = 0;
+				var backTopTimer = null;
+				window.onscroll = function(){
+				 scrollTopTemp = document.body.scrollTop || document.documentElement.scrollTop;
+				 if(screenH < scrollTopTemp){
+				 oBackTop.style.display = 'block';
+				 }else{
+				 oBackTop.style.display = 'none';
+				}
+				}
+				oBackTop.onclick = function(){
+				 backTopTimer = setInterval(function(){
+				 scrTop = document.body.scrollTop || document.documentElement.scrollTop;
+				 iSpeed =scrTop/5;
+				 console.log(iSpeed);
+				 if(scrTop == 0 ){
+				 clearInterval(backTopTimer);
+				 }
+				 document.body.scrollTop = scrTop-iSpeed;
+				 document.documentElement.scrollTop = scrTop-iSpeed;
+				 },30);
+				}
+				}
 		</script>
 	</body>
 </html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+		//内置方法，修改a-b可实现升序或者降序
+			function systemSort(array){
+ 			   return array.sort(function(a, b){
+        	   return a - b;
+    		});
+			}
+		//冒泡排序	
+			function bubbleSort(array){
+				var len=array.length,temp;
+				for (var i = 0; i < len; i++) {
+					for (var j=0;j < len-i-1;j++) {
+						if(array[j] > array[j+1]){
+							temp=array[j];
+							array[j]=array[j+1];
+							array[j+1]=temp;
+						}
+					}
+				}
+				return array
+			}
+		//插入排序
+		function insertSort(arr){
+			var len=array.length,temp;
+			for (var i = 1; i < len; i++) {
+				temp=arr[i];
+				j=i-1;
+				while(temp >= 0 && temp < arr[j]){
+					arr[j + 1] = arr[j];
+					j--;
+				}
+				arr[j+1]=temp
+			}
+			
+		}
+		</script>
+	</body>
+</html>
