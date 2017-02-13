@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		.typewriter{
+			width: 1000px;
+			margin: 0 auto;
+			display: none;
+			text-align: center;
+			font-size: 18px;
+			line-height: 1.5;
+			color: #021734;
+			font-family: "微软雅黑";
+		}
+		.typewriter:after{
+			content: '_';
+			animation-name: flash;
+			animation-iteration-count: infinite;
+			animation-timing-function: steps(2,start);
+			animation-duration: 0.6s;
+		}
+		.typewriter.gameover:after{display:none;}
+		 @keyframes flash{
+            0%{visibility:visible;}
+            100%{visibility:hidden;}
+        }
+        @-webkit-keyframes flash{
+            0%{visibility:visible;}
+            100%{visibility:hidden;}
+        }
+	</style>
+	<body>
+			<div class="typewriter">   <!--1.&nbsp; 半角的不断行的空白格（推荐使用）2.&ensp;  半角的空格 3.&emsp;  全角的空格-->
+			1. Whatever is worth doing is worth doing well.<br />
+			&emsp;任何值得做的，就把它做好。<br /><br />
+			2. Happiness is a way station between too much and too little.<br />
+			&emsp;幸福是太多和太少之间的一站。<br /><br />
+			3. In love folly is always sweet.<br />
+			&emsp;恋爱中，干傻事总是让人感到十分美妙。<br /><br />
+			4. The hard part isn’t making the decision. It’s living with it.<br />
+			&emsp;做出决定并不困难，困难的是接受决定。<br /><br />
+			5. Your happy passer-by all knows, my distressed there is no place hides.<br />
+			&emsp;你的幸福路人皆知，我的狼狈无处遁形。<br /><br />
+			6. You may be out of my sight, but never out of my mind.<br />
+			&emsp;你也许已走出我的视线，但从未走出我的思念。
+		</div>
+		<script>
+			 (function(){
+			 var typewriter=document.querySelector('.typewriter'),
+			 code=typewriter.innerHTML,
+			 pos=0,
+			 len=code.length;
+			 typewriter.innerHTML=''
+			 typewriter.style.display='block'
+			 function typewriting(){
+			 	pos++;
+			 if (pos < len) {
+			 	switch(code.charAt(pos)){ //charAt()返回指定位置的字符
+			 		case "<"://<>代码开始的字符
+			 		pos=code.indexOf(">",pos);//array.indexOf(item,start)返回某个指定的字符串在字符串中首次出现的位置
+			 		break;
+			 		case "&":
+			 		pos=code.indexOf(";",pos);
+			 		break;
+			 	}
+			 	typewriter.innerHTML=code.substring(0,pos);//substring()用于提取字符串中介于两个指定下标之间的字符，substring() 方法返回的子串包括 开始 处的字符，但不包括 结束 处的字符。
+			 	setTimeout(typewriting,80);
+			 }else{
+			 	typewriter.classList.add('gameover');//classList 属性返回元素的类名，作为 DOMTokenList 对象。该属性用于在元素中添加，移除及切换 CSS 类。
+			 }
+			 }
+			 typewriting();
+			 })();
+		</script>
+	</body>
+</html>

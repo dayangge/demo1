@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+		var obj = {a : 1}; 
+			(function (obj) {
+   			 obj = {a : 2}; 
+			})(obj);
+//问obj的值会改变吗？
+/*外部的obj不变.
+因为匿名函数中obj传入参数等于是创建了一个局部变量obj, 里面的obj指向了一个新的对象 . 如果改成(function () { obj = {a : 2}; })(obj);  就会改变了*/
+(function(){
+	var index = 0;
+	function fn(){
+		if(index < 100){
+		    index++;
+		    setTimeout(function(){
+		    	fn();
+			},5000);   	
+	   	}
+	}
+	fn();
+})();
+/*要实现函数内每隔5秒调用自己这个函数，100次以后停止，怎么办?*/
+
+var oLis = document.getElementsByTagName('li');
+for(var i=0; i<oLis.length; i++){
+    oLis[i].onclick = (function(j){
+        return function(){
+            alert(j);
+        }
+    })(i);
+}
+
+//数组去重
+var a = [];
+for(var i=0; i<100000; i++){
+    a.push(Math.ceil(Math.random()*10000));
+}
+ 
+Array.prototype.unique1 = function(){
+    var n = [];     //一个新的临时数组
+    for(var i=0; i<this.length; i++){
+        //如果把当前数组的第i已经保存进了临时数组, 那么跳过
+        if(n.indexOf(this[i]) == -1){
+            n.push(this[i]);
+        }
+    }
+    return n;
+}
+ 
+Array.prototype.unique2 = function(){
+    var hash = {},
+        n = [];     //hash 作为哈希表, n为临时数组
+    for(var i=0; i<this.length; i++){
+        if(!hash[this[i]]){         //如果hash表中没有当前项
+            hash[this[i]] = true;   //存入hash表
+            n.push(this[i]);        //当前元素push到临时数组中
+        }
+    }
+    return n;
+}
+ 
+Array.prototype.unique3 = function(){
+    var n = [this[0]]; 
+    for(var i=1; i<this.length; i++)    //从第二项开始遍历
+    {
+        //如果当前数组元素在数组中出现的第一次的位置不是i
+        //说明是重复元素
+        if(this.indexOf(this[i]) == i){
+            n.push(this[i]);
+        }
+    }
+    return n;
+}
+ 
+Array.prototype.unique4 = function(){
+    this.sort(function(a, b){ return a - b;});
+    var n = [this[0]];
+    for(var i=1; i<this.length; i++){
+        if(this[i] != this[i-1]){
+            n.push(this[i]);
+        }
+    }
+    return n;
+}
+var begin1 = new Date();
+a.unique1();
+var end1 = new Date();
+ 
+var begin2 = new Date();
+a.unique2();
+var end2 = new Date();
+ 
+var begin3 = new Date();
+a.unique3();
+var end3 = new Date();
+ 
+var begin4 = new Date();
+a.unique4();
+var end4 = new Date();
+ 
+console.log("方法一执行时间:" + (end1 - begin1));
+console.log("方法二执行时间:" + (end2 - begin2));
+console.log("方法三执行时间:" + (end3 - begin3));
+console.log("方法四执行时间:" + (end4 - begin4));
+		</script>
+	</body>
+</html>
