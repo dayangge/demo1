@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>完整版大图滚动</title>
+	<link href="css/rest.css" rel="stylesheet" />
+<style>
+		.roll{width:870px; height:255px; margin:20px auto 0;position: relative;}
+		#out,#out2{width:870px; height:255px; overflow:hidden;}
+		.con{width: 8000px; height: 255px; overflow: hidden;}
+		.con img{width: 870px; height: 255px; float: left;}
+		.nav{overflow: hidden; position: absolute; bottom: 5px; left: 45%;}
+		.nav li{width: 16px; height: 16px;border-radius: 50%;  
+			background: #B9D4C8;margin: 0 5px; float: left; cursor: pointer;}
+		.left,.right{width: 30px; height: 40px;font-size: 30px;text-align: center;line-height: 40px; color:#fff;background: #000; cursor: pointer;opacity:0.5;
+			position: absolute;top:120px;left:0;display: none;}
+		.right{position: absolute;top:120px;left:840px;}
+		#out:hover .left{display: block;}
+		#out:hover .right{display: block;}
+		.nav .select{background: #5CB85C;}
+	</style>
+</head>       
+<body>
+	<p style="text-align:center;color:#fa8;font-size:30px;margin:30px 0;">谢谢，拿去用吧</p>
+	<div class="roll"> <!-- 最外层包裹元素，用来控制整个大图的位置以及作为子元素定位的参考 -->
+		<div id="out"> 
+			<div class="con"> <!-- 包裹图片，宽要比所有图片的总宽大， -->
+				<!-- <img src="images/04.jpg"> -->
+				<img src="http://ubmcmm.baidustatic.com/media/v1/0f000QtU4ydn9O9JTOCDQ6.jpg">
+				<img src="http://ubmcmm.baidustatic.com/media/v1/0f000aRPZvJJzwQtfrNrvs.jpg">
+				<img src="http://ubmcmm.baidustatic.com/media/v1/0f000PLHky9rqu2h7ncy0s.jpg">
+				<img src="http://ubmcmm.baidustatic.com/media/v1/0f000ajX1bnm0p_Mo2sFqf.png">
+				<!-- <img src="images/01.jpg"> -->
+			</div>
+			<ul class="nav"> <!-- 放page小圆点 定位控制 z-index比图片大-->
+				<li class="select"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<p class="left"><</p> <!-- 左右键 定位控制 z-index比图片大-->
+			<p class="right">></p>
+		</div>
+	</div>
+	<script src="js/jquery-1.10.0.js"></script>
+<script>
+	$.fn.extend({
+		datu:function(){ //封装大图滚动函数
+			var this2=$(this); //先获取这个对象
+			var fir=this2.find('.con img:first').clone(); //克隆第一张图
+			var las=this2.find('.con img:last').clone(); //克隆最后一张图
+			this2.find('.con').append(fir); //最后面插入克隆的第一张图
+			this2.find('.con').prepend(las); //最前面插入克隆的最后一张图
+			var imgw=Math.floor(this2.find('.con img').width()); //获取一张图的宽度
+			var out=this2.find('#out'); //获取元素目标
+			out.scrollLeft(imgw); //初始化到起点
+			var x=1,y=0; //图多一步故为1(相比page,中间底部的小圆点)
+			var time1=null; //声明变量
+			var img=this2.find('.con img'),li=this2.find('.nav li'); //一次性获取元素，优化性能
+			var left=this2.find('.left'),right=this2.find('.right'); //一次性获取元素，优化性能
+			function huan(){  //换一张图函数
+				clearInterval(time1); //先清除计时器
+				time1=setInterval(function(){
+					x++;
+					if(x==img.length){
+						x=2;//跳到第二张
+						out.scrollLeft(imgw);//滚动条归零
+					}
+					y++;
+					if(y==li.length){//小圆点走自己的一套
+						y=0;
+					}
+					bian(); //执行滚动函数
+				},4000) //控制大图滚动的时间节奏
+			}
+			function bian(){ //一张图走完的过程函数
+				li.eq(y).addClass('select').siblings().removeClass('select'); //小圆点走自己的一套
+				out.animate({scrollLeft:imgw*x}); //jq的动画控制滚动条，这里是x而不是x-1，是因为：
+				//	0 ——> 1,1 ——> 2,2 ——> 3 的顺序，在前一次的基础上再走
+				//	这里用animate动画就可以自己添加其他效果了
+			}
+			left.click(function(){ //左点击
+				clearInterval(time1); //先清除计时器
+				x--;
+				if(x<0){
+					x=img.length-3;//length减去本身比x（从0开始）多的1，再减去新增的最后的那张1，再减去要跳到倒数第二张产生的1，共为3
+					out.scrollLeft(imgw*(x+1),10);//滚动条加1是因为（出现第x张，还要注意插入到最前面的那一张x=5，则滚的是6张图的距离）
+				}
+				y--;
+				if(y<0){
+					y=li.length-1;// y一直减到最左边时，再点击再减就要跳到最右边 0 1 2 3  length为4，下标为3，故 li.length-1;
+				}
+				bian() //一张图走完的过程函数
+				huan() //换一张图函数
+			})
+			right.click(function(){ //右点击
+				clearInterval(time1); //先清除计时器
+				x++;
+				if(x==img.length){
+					x=2;
+					out.scrollLeft(imgw);
+				}
+				y++;
+				if(y==li.length){
+					y=0;
+				}
+				bian() //一张图走完的过程函数
+				huan() //换一张图函数
+			})
+			li.mouseenter(function(){ //page小圆点onmouseover事件
+				clearInterval(time1); //先清除计时器
+				y=$(this).index(); //y管y的
+				x=y+1; //y为1时，看到的是第一张图，实际上前面还有一张图 ——>此时 x=y+1=1+1=2，
+				bian() //一张图走完的过程函数
+				huan() //换一张图函数
+			})
+			huan(); //自动执行，进页面就开始滚
+		}
+	})
+
+	$(function(){
+		$('.roll').datu(); //封装完毕 使用时只更换roll 标签即可 $('.roll2').datu();
+	})
+	// 样式自己调成想要的，其他复制即可。
+</script>
+</body>
+</html>

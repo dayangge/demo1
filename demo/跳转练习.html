@@ -6,11 +6,19 @@
 		<style>
 			p{font-size: 24px;margin-left: 20%;margin-bottom: 50px;}
 			a{text-decoration: underline;color: cornflowerblue;}
+			.a1{
+				width: 200px;
+				height: 200px;
+				border: 100px solid ;
+				border-color:black transparent transparent transparent ;
+				box-sizing: border-box;
+			}
 		</style>
 	</head>
 	<body>
 		<p>操作成功</p>
 		<p><span id="time">5</span>秒内<a id="back">返回</a>到首页</p>
+		<div class="a1"></div>
 		<script>
 			function conut () {
 				time=document.getElementById("time").innerHTML

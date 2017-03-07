@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>hexiezi</title>
+	<style>
+		#c1{font-size: 25px;color:#c81632;}
+	</style>
+</head>
+<body>
+	<textarea name="" id="c1" cols="60" rows="10">
+		2014年1月修订的《党政领导干部选拔任用工作条例》和印发的《关于加强干部选拔任用工作监督的意见》中，也规定了“不准在工作调动、机构变动时，突击提拔、调整干部”和“严禁突击提拔调整干部”。
+　　2016年12月，中组部又修订了《党委（党组）讨论决定干部任免事项守则》，强调“不准突击提拔调整干部，不准临时动议决定干部”。
+	</textarea>
+	<input type="button" value="发布" id="c2">
+	<p id="c3"></p>
+<script>
+	var c1=document.getElementById('c1');
+	var c2=document.getElementById('c2');
+	var c3=document.getElementById('c3');
+	var reg=/选拔|小的|大大的|大小/gi;
+	c2.onclick=function(){
+		c3.innerHTML=c1.innerHTML.replace(reg,function(x){
+			var a='';
+			for(var i=0;i<x.length;i++){
+				a+='*';
+			}
+			c1.innerHTML=""
+			return false
+		})
+	}
+</script>
+</body>
+</html>

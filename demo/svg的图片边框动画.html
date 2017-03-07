@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Border Animation Effect with SVG</title>
+		<meta name="description" content="Border Animation Effect: Recreating the effect seen on carlphilippebrenner.com with SVG" />
+		<meta name="keywords" content="svg, border effect, animated border, line, grid item, hover, css" />
+	
+		<style>
+			*,
+			*:after,
+			*:before {
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			
+			.clearfix:before,
+			.clearfix:after {
+				content: '';
+				display: table;
+			}
+			
+			.clearfix:after {
+				clear: both;
+			}
+			
+			body {
+				background: #2c3e50;
+				color: #ecf0f1;
+				font-size: 100%;
+				line-height: 1.25;
+				font-family: 'Lato', Arial, sans-serif;
+			}
+			
+			a {
+				color: #95a5a6;
+				text-decoration: none;
+				outline: none;
+			}
+			
+			a:hover,
+			a:focus {
+				color: #fff;
+			}
+			
+			.codrops-header {
+				margin: 0 auto;
+				padding: 2em;
+				text-align: center;
+			}
+			
+			.codrops-header h1 {
+				margin: 0;
+				font-weight: 300;
+				font-size: 2.5em;
+			}
+			
+			.codrops-header h1 span {
+				display: block;
+				padding: 0 0 0.6em 0.1em;
+				font-size: 0.6em;
+				opacity: 0.7;
+			}
+			/* To Navigation Style */
+			
+			.codrops-top {
+				width: 100%;
+				text-transform: uppercase;
+				font-weight: 700;
+				font-size: 0.69em;
+				line-height: 2.2;
+			}
+			
+			.codrops-top a {
+				display: inline-block;
+				padding: 0 1em;
+				text-decoration: none;
+				letter-spacing: 1px;
+			}
+			
+			.codrops-top span.right {
+				float: right;
+			}
+			
+			.codrops-top span.right a {
+				display: block;
+				float: left;
+			}
+			
+			.codrops-icon:before {
+				margin: 0 4px;
+				text-transform: none;
+				font-weight: normal;
+				font-style: normal;
+				font-variant: normal;
+				font-family: 'codropsicons';
+				line-height: 1;
+				speak: none;
+				-webkit-font-smoothing: antialiased;
+			}
+			
+			.codrops-icon-drop:before {
+				content: "\e001";
+			}
+			
+			.codrops-icon-prev:before {
+				content: "\e004";
+			}
+			
+			section {
+				padding: 4em 2em;
+				text-align: center;
+			}
+			
+			section h2 {
+				font-weight: 300;
+				font-size: 2em;
+				padding: 1em 0;
+			}
+			
+			.codrops-header+section {
+				padding-top: 1.5em;
+			}
+			
+			.related p {
+				font-size: 1.5em;
+			}
+			
+			.related>a {
+				background: rgba(0, 0, 0, 0.05);
+				display: inline-block;
+				text-align: center;
+				margin: 20px 10px;
+				padding: 25px;
+				-webkit-transition: color 0.3s, background-color 0.3s;
+				transition: color 0.3s, background-color 0.3s;
+			}
+			
+			.related a:hover {
+				background-color: rgba(0, 0, 0, 0.4);
+			}
+			
+			.related a img {
+				max-width: 100%;
+				opacity: 0.8;
+				-webkit-transition: opacity 0.3s;
+				transition: opacity 0.3s;
+			}
+			
+			.related a:hover img,
+			.related a:active img {
+				opacity: 1;
+			}
+			
+			.related a h3 {
+				margin: 0;
+				padding: 0.5em 0 0.3em;
+				max-width: 300px;
+				text-align: left;
+			}
+			
+			@media screen and (max-width: 25em) {
+				.codrops-icon span {
+					display: none;
+				}
+			}
+			
+			.box {
+				width: 300px;
+				height: 460px;
+				position: relative;
+				background: rgba(255, 255, 255, 1);
+				display: inline-block;
+				margin: 0 10px;
+				cursor: pointer;
+				color: #2c3e50;
+				box-shadow: inset 0 0 0 3px #2c3e50;
+				-webkit-transition: background 0.4s 0.5s;
+				transition: background 0.4s 0.5s;
+			}
+			
+			.box:hover {
+				background: rgba(255, 255, 255, 0);
+				-webkit-transition-delay: 0s;
+				transition-delay: 0s;
+			}
+			
+			.box h3 {
+				font-family: "Ruthie", cursive;
+				font-size: 180px;
+				line-height: 370px;
+				margin: 0;
+				font-weight: 400;
+				width: 100%;
+			}
+			
+			.box span {
+				display: block;
+				font-weight: 400;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				font-size: 13px;
+				padding: 5px;
+			}
+			
+			.box h3,
+			.box span {
+				-webkit-transition: color 0.4s 0.5s;
+				transition: color 0.4s 0.5s;
+			}
+			
+			.box:hover h3,
+			.box:hover span {
+				color: #fff;
+				-webkit-transition-delay: 0s;
+				transition-delay: 0s;
+			}
+			
+			.box svg {
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			
+			.box svg line {
+				stroke-width: 3;
+				stroke: #ecf0f1;
+				fill: none;
+				-webkit-transition: all .8s ease-in-out;
+				transition: all .8s ease-in-out;
+			}
+			
+			.box:hover svg line {
+				-webkit-transition-delay: 0.1s;
+				transition-delay: 0.1s;
+			}
+			
+			.box svg line.top,
+			.box svg line.bottom {
+				stroke-dasharray: 330 240;
+			}
+			
+			.box svg line.left,
+			.box svg line.right {
+				stroke-dasharray: 490 400;
+			}
+			
+			.box:hover svg line.top {
+				-webkit-transform: translateX(-600px);
+				transform: translateX(-600px);
+			}
+			
+			.box:hover svg line.bottom {
+				-webkit-transform: translateX(600px);
+				transform: translateX(600px);
+			}
+			
+			.box:hover svg line.left {
+				-webkit-transform: translateY(920px);
+				transform: translateY(920px);
+			}
+			
+			.box:hover svg line.right {
+				-webkit-transform: translateY(-920px);
+				transform: translateY(-920px);
+			}
+			/* Alternatives */
+			/* Color */
+			
+			.demo-2 .box {
+				box-shadow: inset 0 0 0 10px #2c3e50;
+			}
+			
+			.demo-2 .box:hover h3,
+			.demo-2 .box:hover span {
+				color: #fe6f83;
+			}
+			
+			.demo-2 .box svg line {
+				stroke-width: 8;
+			}
+			
+			.demo-2 .box:hover svg line {
+				stroke: #fe6f83;
+			}
+			/* Frame */
+			
+			.demo-3 .box {
+				background: rgba(0, 0, 0, 0);
+				color: #fff;
+				box-shadow: none;
+				-webkit-transition: background 0.3s;
+				transition: background 0.3s;
+			}
+			
+			.demo-3 .box:hover {
+				background: rgba(0, 0, 0, 0.4);
+			}
+			
+			.demo-3 .box h3,
+			.demo-3 .box span {
+				-webkit-transition: none;
+				transition: none;
+			}
+			
+			.demo-3 .box svg line {
+				-webkit-transition: all .5s;
+				transition: all .5s;
+			}
+			
+			.demo-3 .box:hover svg line {
+				stroke-width: 10;
+				-webkit-transition-delay: 0s;
+				transition-delay: 0s;
+			}
+			
+			.demo-3 .box:hover svg line.top {
+				-webkit-transform: translateX(-300px);
+				transform: translateX(-300px);
+			}
+			
+			.demo-3 .box:hover svg line.bottom {
+				-webkit-transform: translateX(300px);
+				transform: translateX(300px);
+			}
+			
+			.demo-3 .box:hover svg line.left {
+				-webkit-transform: translateY(460px);
+				transform: translateY(460px);
+			}
+			
+			.demo-3 .box:hover svg line.right {
+				-webkit-transform: translateY(-460px);
+				transform: translateY(-460px);
+			}
+			/* Spin */
+			
+			.demo-4 .box {
+				box-shadow: none;
+				background: rgba(0, 0, 0, 0.4);
+				-webkit-transition: none;
+				transition: none;
+				color: #fff;
+			}
+			
+			.demo-4 .box h3,
+			.demo-4 .box span {
+				-webkit-transform: scale(0.9);
+				transform: scale(0.9);
+				-webkit-backface-visibility: hidden;
+				backface-visibility: hidden;
+				-webkit-transition: -webkit-transform 0.5s;
+				transition: transform 0.5s;
+			}
+			
+			.demo-4 .box:hover h3,
+			.demo-4 .box:hover span {
+				-webkit-transform: scale(1);
+				transform: scale(1);
+			}
+			
+			.demo-4 .box svg line {
+				stroke-width: 30;
+				-webkit-transition: all .4s;
+				transition: all .4s;
+			}
+			
+			.demo-4 .box:hover svg line {
+				-webkit-transition-delay: 0s;
+				transition-delay: 0s;
+			}
+			
+			.demo-4 .box:hover svg line {
+				stroke-width: 0;
+			}
+			
+			.demo-4 .box svg line.top,
+			.demo-4 .box svg line.bottom {
+				stroke-dasharray: 300;
+			}
+			
+			.demo-4 .box svg line.left,
+			.demo-4 .box svg line.right {
+				stroke-dasharray: 460;
+			}
+			
+			.demo-4 .box:hover svg line.top {
+				-webkit-transform: translateX(-300px);
+				transform: translateX(-300px);
+			}
+			
+			.demo-4 .box:hover svg line.bottom {
+				-webkit-transform: translateX(300px);
+				transform: translateX(300px);
+			}
+			
+			.demo-4 .box:hover svg line.left {
+				-webkit-transform: translateY(460px);
+				transform: translateY(460px);
+			}
+			
+			.demo-4 .box:hover svg line.right {
+				-webkit-transform: translateY(-460px);
+				transform: translateY(-460px);
+			}
+		</style>
+		<!--[if IE]>
+  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="container">
+			<header class="codrops-header">
+				<h1>Border Animation Effect <span>Recreating the effect seen on <a href="http://carlphilippebrenner.com/">carlphilippebrenner.com</a> with SVG</span></h1>
+				<p>Highly experimental, tested in Google Chrome and Firefox</p>
+			</header>
+			<section class="demo-1">
+				<div class="grid">
+					<div class="box">
+						<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+							<line class="top" x1="0" y1="0" x2="900" y2="0" />
+							<line class="left" x1="0" y1="460" x2="0" y2="-920" />
+							<line class="bottom" x1="300" y1="460" x2="-600" y2="460" />
+							<line class="right" x1="300" y1="0" x2="300" y2="1380" />
+						</svg>
+						<h3>D</h3>
+						<span>2012</span>
+						<span>Broccoli, Asparagus, Curry</span>
+					</div>
+					<div class="box">
+						<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+							<line class="top" x1="0" y1="0" x2="900" y2="0" />
+							<line class="left" x1="0" y1="460" x2="0" y2="-920" />
+							<line class="bottom" x1="300" y1="460" x2="-600" y2="460" />
+							<line class="right" x1="300" y1="0" x2="300" y2="1380" />
+						</svg>
+						<h3>A</h3>
+						<span>2013</span>
+						<span>Arugula, Chickweed</span>
+					</div>
+					<div class="box">
+						<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+							<line class="top" x1="0" y1="0" x2="900" y2="0" />
+							<line class="left" x1="0" y1="460" x2="0" y2="-920" />
+							<line class="bottom" x1="300" y1="460" x2="-600" y2="460" />
+							<line class="right" x1="300" y1="0" x2="300" y2="1380" />
+						</svg>
+						<h3>S</h3>
+						<span>2014</span>
+						<span>Strawberry, Lemon</span>
+					</div>
+				</div>
+				<!-- /grid -->
+			</section>
+			<section class="demo-2">
+				<h2>Color animation</h2>
+				<div class="grid">
+					<div class="box">
+						<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+							<line class="top" x1="0" y1="0" x2="900" y2="0" />
+							<line class="left" x1="0" y1="460" x2="0" y2="-920" />
+							<line class="bottom" x1="300" y1="460" x2="-600" y2="460" />
+							<line class="right" x1="300" y1="0" x2="300" y2="1380" />
+						</svg>
+						<h3>J</h3>
+						<span>2012</span>
+						<span>Walnut, Pineapple</span>
+					</div>
+					<div class="box">
+						<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+							<line class="top" x1="0" y1="0" x2="900" y2="0" />
+							<line class="left" x1="0" y1="460" x2="0" y2="-920" />
+							<line class="bottom" x1="300" y1="460" x2="-600" y2="460" />
+							<line class="right" x1="300" y1="0" x2="300" y2="1380" />
+						</svg>
+						<h3>I</h3>
+						<span>2013</span>
+						<span>Curry, Beancurd</span>
+					</div>
+					<div class="box">
+						<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+							<line class="top" x1="0" y1="0" x2="900" y2="0" />
+							<line class="left" x1="0" y1="460" x2="0" y2="-920" />
+							<line class="bottom" x1="300" y1="460" x2="-600" y2="460" />
+							<line class="right" x1="300" y1="0" x2="300" y2="1380" />
+						</svg>
+						<h3>C</h3>
+						<span>2014</span>
+						<span>Lettuce, Asparagus</span>
+					</div>
+				</div>
+				<!-- /grid -->
+			</section>
+			<section class="demo-3">
+				<h2>Frame</h2>
+				<div class="grid">
+					<div class="box">
+						<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+							<line class="top" x1="0" y1="0" x2="900" y2="0" />
+							<line class="left" x1="0" y1="460" x2="0" y2="-920" />
+							<line class="bottom" x1="300" y1="460" x2="-600" y2="460" />
+							<line class="right" x1="300" y1="0" x2="300" y2="1380" />
+						</svg>
+						<h3>B</h3>
+						<span>2012</span>
+						<span>Marmalade, Honey</span>
+					</div>
+					<div class="box">
+						<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+							<line class="top" x1="0" y1="0" x2="900" y2="0" />
+							<line class="left" x1="0" y1="460" x2="0" y2="-920" />
+							<line class="bottom" x1="300" y1="460" x2="-600" y2="460" />
+							<line class="right" x1="300" y1="0" x2="300" y2="1380" />
+						</svg>
+						<h3>U</h3>
+						<span>2013</span>
+						<span>Beans, Chickweed</span>
+					</div>
+					<div class="box">
+						<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+							<line class="top" x1="0" y1="0" x2="900" y2="0" />
+							<line class="left" x1="0" y1="460" x2="0" y2="-920" />
+							<line class="bottom" x1="300" y1="460" x2="-600" y2="460" />
+							<line class="right" x1="300" y1="0" x2="300" y2="1380" />
+						</svg>
+						<h3>Q</h3>
+						<span>2014</span>
+						<span>Broccoli, Lettuce</span>
+					</div>
+				</div>
+				<!-- /grid -->
+			</section>
+			<section class="demo-4">
+				<h2>Border spin</h2>
+				<div class="grid">
+					<div class="box">
+						<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+							<line class="top" x1="0" y1="0" x2="900" y2="0" />
+							<line class="left" x1="0" y1="460" x2="0" y2="-920" />
+							<line class="bottom" x1="300" y1="460" x2="-600" y2="460" />
+							<line class="right" x1="300" y1="0" x2="300" y2="1380" />
+						</svg>
+						<h3>C</h3>
+						<span>2012</span>
+						<span>Berry, Spinach</span>
+					</div>
+					<div class="box">
+						<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+							<line class="top" x1="0" y1="0" x2="900" y2="0" />
+							<line class="left" x1="0" y1="460" x2="0" y2="-920" />
+							<line class="bottom" x1="300" y1="460" x2="-600" y2="460" />
+							<line class="right" x1="300" y1="0" x2="300" y2="1380" />
+						</svg>
+						<h3>A</h3>
+						<span>2013</span>
+						<span>Arugula, Chickweed</span>
+					</div>
+					<div class="box">
+						<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+							<line class="top" x1="0" y1="0" x2="900" y2="0" />
+							<line class="left" x1="0" y1="460" x2="0" y2="-920" />
+							<line class="bottom" x1="300" y1="460" x2="-600" y2="460" />
+							<line class="right" x1="300" y1="0" x2="300" y2="1380" />
+						</svg>
+						<h3>J</h3>
+						<span>2014</span>
+						<span>Broccoli, Asparagus, Lettuce</span>
+					</div>
+				</div>
+				<!-- /grid -->
+			</section>
+		</div>
+		<!-- /container -->
+	</body>
+
+</html>

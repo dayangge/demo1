@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>重力小球</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <style>
+
+
+        *{margin: 0;padding: 0;}
+        body{margin: 10px;}
+        .div1{width: 100px;height: 100px;background: red;position: absolute;left: 10px;top: 50px;cursor:move;border-radius: 100%;}
+
+
+    </style>
+</head>
+<body>
+
+
+    <input type="button" name="" value="开始运动"/>
+    <div class="div1"></div>
+
+
+<script>
+
+window.onload=function(){
+
+//qq群：前端一锅煮
+
+var box=document.getElementsByTagName('div')[0];
+var ipt=document.getElementsByTagName('input')[0];
+ipt.onclick=function(){
+    move(box)
+}
+
+var lastx=0,lasty=0,
+    speedx=0,//写到外面才可以取得拖拽里面的值
+    speedy=0,
+    timer=null;//拖拽里面也要清除计时器，所以不能写在对象上
+
+box.onmousedown=function(ev){
+    var ev=ev||event.ev,
+    x=ev.clientX-box.offsetLeft,
+    y=ev.clientY-box.offsetTop;
+    document.onmousemove=function(ev){
+        var ev=ev||event.ev,
+            l=ev.clientX-x,
+            t=ev.clientY-y;
+        box.style.left=l+'px';
+        box.style.top=t+'px';
+
+        speedx=l-lastx;//计算拖拽的距离模拟力度
+        speedy=t-lasty;
+
+        lastx=l;//和上面的顺序不能错，否则取值一直为0，
+        lasty=t;
+    }
+    document.onmouseup=function(){
+        document.onmousemove=null;
+        document.onmouseup=null;
+        move(box)//甩开的时候执行重力函数
+    }
+    clearInterval(timer);//此处不清除计时器，会叠加
+    return false;//防止鼠标移动过快，放开的时候不执行onmouseup函数
+}
+
+function move(obj){
+    clearInterval(timer);
+    timer=setInterval(function(){
+
+        speedy+=3;//重力效果核心
+        var l=box.offsetLeft+speedx,
+            t=box.offsetTop+speedy,
+            cw=document.documentElement.clientWidth,
+            ow=box.offsetWidth,
+            ch=document.documentElement.clientHeight,
+            oh=box.offsetHeight;
+        if(l<=0){
+            speedx*=-0.8;//x轴未加重力，故加摩擦模拟部分效果
+            l=0;
+        }else if(l>=cw-ow){
+            speedx*=-0.8;
+            l=cw-ow;
+        };
+
+        if(t<=0){
+            speedy*=-1;//可以是0到1的任意数
+            speedx*=0.8;//x为正，在同一方向快速减速
+            t=0;
+        }else if(t>=ch-oh){
+            speedy*=-0.8;//加摩擦，效果更明显
+            speedx*=0.8;
+            t=ch-oh;
+        };
+
+        if(Math.abs(speedx)<1){//接近0时，归0
+            speedx=0;
+        };
+        if(Math.abs(speedy)<1){
+            speedy=0;
+        };
+        //尽管停下来了也要清除计时器，否则计时器一直执行，耗费性能
+        if(speedx==0 && speedy==0 && t==ch-oh){
+            clearInterval(timer);
+        }else{//放到else里面确保任何时候都经过if筛选
+            box.style.left=l+'px';
+            box.style.top=t+'px';
+        }
+    },30)
+}
+
+
+}
+</script>
+</body>
+</html>
