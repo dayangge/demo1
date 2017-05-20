@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	    <style>
+            html,body{
+                height: 100%;
+            }
+        img {
+            display: block;
+            margin-bottom: 50px;
+            width: 400px;
+            height: 400px;
+        }
+        .loading_box{
+            width: 100%;
+            height: 100%;
+            background-color: #9b5097;
+        }
+        .loading{
+            width: 60px;
+            height: 60px;
+            top:50%;
+            left:50%;
+            position: relative;
+            transform: translateX(-50%) translateY(-50%);
+        }
+            .double1,.double2{
+                width: 100%;
+                height:100%;
+                border-radius:50% ;
+                background-color: #0062e0;
+                left: 0;
+                top:0;
+                position: absolute;
+                opacity: .6;
+            }
+            .rate{
+                font-size: 12px;
+                width: 100%;
+                text-align: center;
+                height: 20px;
+                line-height:20px;
+                position: absolute;
+                top:100%;
+            }
+            .double1{
+                -webkit-animation:bounce1 2s infinite ease-in-out 0s ;
+            }
+            .double2{
+                 -webkit-animation:bounce2 2s infinite ease-in-out 0s ;
+             }
+
+            @-webkit-keyframes bounce1 {
+                0%,100%{
+                    transform: scale(0);
+                }
+                50%{
+                    transform: scale(1);
+                }
+            }
+            @-webkit-keyframes bounce2 {
+                0%,100%{
+                    transform: scale(1);
+                }
+                50%{
+                    transform: scale(0);
+                }
+            }
+
+    </style>
+        <script src="js/jquery-1.10.0.js"></script>
+</head>
+<body>
+<div class="loading_box">
+    <div class="loading">
+        <div class="double1"></div>
+        <div class="double2"></div>
+        <div class="rate">0%</div>
+    </div>
+</div>
+<div class="page1">
+    这里是内容
+</div>
+	</body>
+	
+	<script>
+
+        (function () {
+            function loading(imgs,opts) {
+                this.imgs = (typeof imgs === 'string')||imgs;
+                this.opts = $.extend({},loading.DEFAULTS,opts);
+                this._preload();
+            }
+            loading.DEFAULTS={
+                opts:null
+            };
+            loading.prototype._preload = function () {
+                var imgs = this.imgs,
+                    opts = this.opts,
+                    count = 0,
+                len = imgs.length;
+                $.each(imgs,function (i,item) {
+                    img = new Image();
+                    img.src = imgs[i];
+                    $('.page1').append(img);
+                    $(img).on('load error',function () {
+                        debugger;
+                        $('.rate').text(Math.round((count+1)/len) *100 + '%');
+                        debugger;
+                        if(count >= len - 1 ){
+                            $('.loading_box').delay(2000).fadeOut()
+                        }
+                        count++
+                    })
+                })
+            };
+            loading.DEFAULTS ={
+                each:null,
+                all:null
+            };
+            $.extend({
+                loading:function (imgs,opts) {
+                    new loading(imgs, opts)
+                }
+            })
+        })(jQuery);
+            var imgs=['http://www.tianbaocs.com/manager//uploads/img/thumb0/2017/03/23/800X800_7c1f5409-0182-4bad-86c5-a43cddcf471f.jpg',
+            'http://www.tianbaocs.com/manager//uploads/img/thumb0/2017/03/23/800X800_f6b5b48c-9267-4c63-a7d0-a8604a7d8429.jpg',
+            'http://www.tianbaocs.com/manager//uploads/img/thumb0/2017/02/27/800X800_710ec789-be5d-471b-bc69-cdfb53186166.jpg',
+            'http://www.tianbaocs.com/manager//uploads/img/thumb0/2017/02/27/800X800_16b9e918-b88a-4dc7-b769-56ffb1b3a848.jpg',
+            'http://www.tianbaocs.com/manager//uploads/img/thumb0/2017/02/24/800X800_5e090803-d722-4603-9bff-0bb98945856c.jpg',
+            'http://www.tianbaocs.com/manager//uploads/img/thumb0/2017/02/24/800X800_f9bc1cf4-89c6-41ca-b02f-52dea719b1b6.jpg',
+            'http://n.sinaimg.cn/sports/2_img/upload/cf0d0fdd/20170502/jdn_-fyetwtf9416680.jpg'];
+
+        $.loading(imgs)
+
+	</script>
+</html>

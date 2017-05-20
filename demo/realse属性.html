@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	
+	<body>
+		<style>
+			.container{
+				width: 500px;
+				position: relative;
+				height: 281px;
+				overflow: hidden;
+			}
+			
+			.container .box{
+				position: absolute;
+				max-width: 500px;
+				width: 10%;
+				height: 281px;
+				background-color: rgba(189,85,116,0.3);
+				z-index: 99;
+				resize: horizontal;
+				}
+			.container img{
+				position: absolute;
+				width: 100%;
+			}
+		</style>
+		<div class="container">
+			<div class="box"></div>
+			<img src="img/1377575438192.jpg" />
+		</div>
+	</body>
+</html>

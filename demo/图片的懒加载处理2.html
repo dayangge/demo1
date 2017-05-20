@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	    <style>
+	    html,body{
+	    	height: 100%;
+	    }
+        img {
+            display: block;
+            margin-bottom: 50px;
+            width: 400px;
+            height: 400px;
+        }
+        .progress{
+        	width: 100%;
+        	height: 100%;
+        	text-align: center;
+        	background-color: #00FFFF;
+     
+        }
+    </style>
+        <script src="js/jquery-1.10.0.js"></script>
+</head>
+<body>
+	<div class="progress" ></div>
+    <img src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+    <img src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+    <img src="http://ww1.sinaimg.cn/large/006y8mN6gw1fa7kaed2hpj30sg0l9q54.jpg" alt="">
+    <img src="http://ww1.sinaimg.cn/large/006y8mN6gw1fa7kaed2hpj30sg0l9q54.jpg" alt="">
+    <img src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+    <img src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+    <img src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+    <img src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+    <img src="http://ww1.sinaimg.cn/large/006y8mN6gw1fa7kaed2hpj30sg0l9q54.jpg" alt="">
+    <img src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+    <img src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+	</body>
+	
+	<script>
+		
+        ;(function ($) {
+            function PreLoad(imgs,options) {
+              this.imgs = (typeof imgs === 'string')?[imgs]:imgs;
+              this.opts = $.extend({},PreLoad.DEFAULTS,options);
+              this._unoredered();
+            }
+            PreLoad.DEFAULTS ={
+                each:null,
+                all:null
+            };
+            PreLoad.prototype._unoredered = function () {// 加载
+                var imgs = this.imgs,
+                opts = this.opts,
+                count = 0;
+                len = imgs.length;
+                $.each(imgs,function (i,src) {
+                    if(typeof src != 'string') return;
+                    var imgObj = new Image();
+                    $(imgObj).on('load error',function () {
+                        opts.each && opts.each(count);
+                        if(count >= len - 1 ){
+                           opts.all && opts.all();
+                        }
+                        count ++
+                    });
+                    imgObj.src = src;
+                })
+            };
+            $.extend({
+                PreLoad:function (imgs ,opts) {
+                    new PreLoad(imgs,opts);
+                }
+            })
+        })(jQuery);
+        var index = 0,
+        img = document.getElementsByTagName('img'),
+        len = img.length,
+        arr = [];
+        
+        for (var i=0 ;i<img.length;i++) {
+        	isrc = img[i].src
+        	arr.push(isrc)
+        }
+        $progress = $('.progress');
+        $.PreLoad(arr,{
+            each:function (count) {
+                $progress.html(Math.round((count + 1)/len * 100 ) + '%');
+            },
+            all:function () {
+                $('.progress').fadeOut(500);
+                document.title = '1/' + len;
+            }
+        })
+	</script>
+</html>
