@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<style type="text/css">
+			.cube-container{
+				position: relative;
+				transform-style: preserve-3d;
+				transform: rotateX(-25deg)rotateY(25deg);
+			}
+			.cube-container div{
+				width: 300px;
+				height: 300px;
+				position: absolute;
+				top: 0;
+				left: 0;
+				opacity: 0.6;
+			}
+			.cube1{
+				background-color: #008000;
+				transform:translateZ(300px);
+			}
+			.cube2{
+				background-color: #00FFFF;
+				transform: rotateX(90deg)translateX(0px)translateY(150px)translateZ(150px)
+			}
+			.cube3{
+				background-color: #0C3829;
+				transform: rotateY(90deg)translateX(-150px)translateY(0px)translateZ(150px)
+			}
+			.cube4{
+				background-color: #4C1D36;
+				transform: rotateY(90deg)translateX(-150px)translateY(0px)translateZ(-150px)
+			}
+			.cube5{
+				background-color: #611C19;
+				transform: rotateX(90deg)translateX(0px)translateY(150px)translateZ(-150px)
+			}
+			.cube6{
+				background-color: #83006F;
+			}
+		</style>
+		<div class="cube-container">
+			<div class="cube1"></div>
+			<div class="cube2"></div>
+			<div class="cube3"></div>
+			<div class="cube4"></div>
+			<div class="cube5"></div>
+			<div class="cube6"></div>
+		</div>	
+	</body>
+</html>
